@@ -32,9 +32,9 @@ def player(playerX,playerY):
 def obstacle(obstacleX,obstacleY):
     screen.blit(obstacleImg, (obstacleX, obstacleY))
 
-def collide(playerY,obstacleY):
+def collide(playerX,playerY,obstacleX,obstacleY):
     dist=math.fabs(playerY-obstacleY)
-    if dist<20:
+    if dist<20 and playerX==obstacleX:
         return True
     else:
         return False
@@ -60,7 +60,7 @@ while running:
     pygame.display.set_icon(icon)
 
     #game over
-    if collide(playerY,obstacleY):
+    if collide(playerX,playerY,obstacleX,obstacleY):
         gameOver(score)
     #obstacle movement
     else:
