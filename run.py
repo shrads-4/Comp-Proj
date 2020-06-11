@@ -4,7 +4,7 @@ import random
 
 pygame.init()
 
-score=0
+score = 0
 
 # creating the screen
 screen = pygame.display.set_mode((800, 640), pygame.RESIZABLE)
@@ -20,31 +20,36 @@ playerX = 330
 playerY = 550
 
 # obstacle, 225 on 1, 330 on 2,  520 on 4
-obstacleImg = pygame.image.load('barrier.png')
+obstacleImgList = [pygame.image.load('traffic-light.png'), pygame.image.load(
+    'barrier.png'), pygame.image.load('traffic-sign.png'), pygame.image.load('vlc.png')]
+obstacleImg = obstacleImgList[random.randint(0, 3)]
 obstacleX = XList[random.randrange(0, 3)]
 obstacleY = 0
 
 
-def player(playerX,playerY):
+def player(playerX, playerY):
     screen.blit(playerImg, (playerX, playerY))
 
 
-def obstacle(obstacleX,obstacleY):
+def obstacle(obstacleX, obstacleY):
     screen.blit(obstacleImg, (obstacleX, obstacleY))
 
-def collide(playerX,playerY,obstacleX,obstacleY):
-    dist=math.fabs(playerY-obstacleY)
-    if dist<20 and playerX==obstacleX:
+
+def collide(playerX, playerY, obstacleX, obstacleY):
+    dist = math.fabs(playerY-obstacleY)
+    if dist < 20 and playerX == obstacleX:
         return True
     else:
         return False
 
+
 def gameOver(score):
-    gameFont=pygame.font.Font('freesansbold.ttf',64)
-    gameText1=gameFont.render('GAME OVER',True,(255,255,255))
-    screen.blit(gameText1,(200,200))
-    gameText2=gameFont.render('Score:'+str(score),True,(255,255,255))
-    screen.blit(gameText2,(250,300))
+    gameFont = pygame.font.Font('freesansbold.ttf', 64)
+    gameText1 = gameFont.render('GAME OVER', True, (255, 255, 255))
+    screen.blit(gameText1, (200, 200))
+    gameText2 = gameFont.render('Score:'+str(score), True, (255, 255, 255))
+    screen.blit(gameText2, (250, 300))
+
 
 # game loop
 running = True
@@ -59,19 +64,19 @@ while running:
     icon = pygame.image.load('vampire.png')
     pygame.display.set_icon(icon)
 
-    #game over
-    if collide(playerX,playerY,obstacleX,obstacleY):
+    # game over
+    if collide(playerX, playerY, obstacleX, obstacleY):
         gameOver(score)
-    #obstacle movement
+    # obstacle movement
     else:
-        obstacleY+=3
+        obstacleY += 3
 
-    #keyboard input
+    # keyboard input
     for event in pygame.event.get():
         # action on clicking the x
         if event.type == pygame.QUIT:
             running = False
-        #action on pressing arrow keys
+        # action on pressing arrow keys
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
                 if XList.index(playerX) != 3:
@@ -80,6 +85,6 @@ while running:
                 if XList.index(playerX) != 0:
                     playerX = XList[XList.index(playerX)-1]
 
-    obstacle(obstacleX,obstacleY)
-    player(playerX,playerY)
+    obstacle(obstacleX, obstacleY)
+    player(playerX, playerY)
     pygame.display.update()
