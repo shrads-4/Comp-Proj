@@ -49,6 +49,7 @@ def gameOver(score):
     screen.blit(gameText1, (200, 200))
     gameText2 = gameFont.render('Score:'+str(score), True, (255, 255, 255))
     screen.blit(gameText2, (250, 300))
+    
 
 
 # game loop
@@ -69,6 +70,9 @@ while running:
         gameOver(score)
     # obstacle movement
     else:
+        if obstacleY >= 640:
+            obstacleY = 0
+            obstacleX = XList[random.randrange(0, 3)]
         obstacleY += 3
 
     # keyboard input
