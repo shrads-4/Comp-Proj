@@ -37,7 +37,7 @@ def obstacle(obstacleX, obstacleY):
 
 def collide(playerX, playerY, obstacleX, obstacleY):
     dist = math.fabs(playerY-obstacleY)
-    if dist < 20 and playerX == obstacleX:
+    if dist < 40 and playerX == obstacleX:
         return True
     else:
         return False
@@ -73,7 +73,7 @@ while running:
         if obstacleY >= 640:
             obstacleY = 0
             obstacleX = XList[random.randrange(0, 3)]
-        obstacleY += 3
+        obstacleY += 4
 
     # keyboard input
     for event in pygame.event.get():
