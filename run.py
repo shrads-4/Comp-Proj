@@ -56,7 +56,7 @@ def gameOver(score):
 running = True
 
 while running:
-
+    
     # background
     screen.blit(background, (0, 0))
 
@@ -73,7 +73,7 @@ while running:
         if obstacleY >= 640:
             obstacleY = 0
             obstacleX = XList[random.randrange(0, 3)]
-        obstacleY += 4
+        obstacleY += 5
 
     # keyboard input
     for event in pygame.event.get():
