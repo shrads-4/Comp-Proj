@@ -1,4 +1,4 @@
-import pygame,sys,pygbutton,time
+import pygame,pygbutton
 
 pygame.init()  
 screen = pygame.display.set_mode((700,600))
@@ -6,7 +6,6 @@ pygame.display.set_caption("<name/topic>")
 pygame.display.flip()
 
 def quiz():
-    i=0
     question = pygbutton.PygButton((200,80,300,80),"<question>")
     answer1 = pygbutton.PygButton((250,260,200,30),"option1")
     answer2 = pygbutton.PygButton((250,300,200,30),"option2")
