@@ -20,24 +20,37 @@ playerX = 330
 playerY = 550
 
 # obstacle, 225 on 1, 330 on 2,  520 on 4
-obstacleImgList = [pygame.image.load('traffic-light.png'), pygame.image.load(
+imgList = [pygame.image.load('traffic-light.png'), pygame.image.load(
     'barrier.png'), pygame.image.load('traffic-sign.png'), pygame.image.load('vlc.png')]
-obstacleImg = obstacleImgList[random.randint(0, 3)]
-obstacleX = XList[random.randrange(0, 3)]
+obstacleImg = imgList[random.randint(0, 3)]
+#obstacleX = XList[random.randrange(0, 3)]
 obstacleY = 0
+noOfObstacles=7
 
+#
+X,Y,imgD={},{},{}
+for i in range(noOfObstacles):
+    img=imgList[random.randint(0,3)]
+    imgD[i]=img
+    X[i]=XList[random.randint(0,3)]
+    Y[i]=obstacleY-125*i
+#
 
 def player(playerX, playerY):
     screen.blit(playerImg, (playerX, playerY))
 
 
-def obstacle(obstacleX, obstacleY):
-    screen.blit(obstacleImg, (obstacleX, obstacleY))
+def obstacle(imgD,X,Y):
+    #screen.blit(obstacleImg, (obstacleX, obstacleY));param:obstacleImg,obstacleX,obstacleY
+    #
+    for i in range(noOfObstacles):
+        screen.blit(imgD[i],(X[i],Y[i]))
+    #
 
 
 def collide(playerX, playerY, obstacleX, obstacleY):
     dist = math.fabs(playerY-obstacleY)
-    if dist < 40 and playerX == obstacleX:
+    if dist < 30 and playerX == obstacleX:
         return True
     else:
         return False
@@ -66,15 +79,34 @@ while running:
     pygame.display.set_icon(icon)
 
     # game over
-    if collide(playerX, playerY, obstacleX, obstacleY):
+    '''if collide(playerX, playerY, obstacleX, obstacleY):
         gameOver(score)
+    '''
+    for i in range(noOfObstacles):
+        if collide(playerX,playerY,X[i],Y[i]):
+            gameOver(score)
+        else:
+            if Y[i]>=640:
+                Y[i]=0
+                X[i]=XList[random.randint(0,3)]
+                '''
+                spaced=True
+                while spaced:
+                    for j in range(noOfObstacles):
+                        if X[i]==X[j] and math.fabs(Y[i]-Y[j])<=80:
+                            Y[i]-=math.fabs(Y[i]-Y[j])
+                    else:
+                        spaced=False '''               
+            else:
+                Y[i]+=5
+    '''
     # obstacle movement
     else:
         if obstacleY >= 640:
             obstacleY = 0
             obstacleX = XList[random.randrange(0, 3)]
         obstacleY += 5
-
+    '''
     # keyboard input
     for event in pygame.event.get():
         # action on clicking the x
@@ -89,6 +121,6 @@ while running:
                 if XList.index(playerX) != 0:
                     playerX = XList[XList.index(playerX)-1]
 
-    obstacle(obstacleX, obstacleY)
+    obstacle(imgD,X,Y)
     player(playerX, playerY)
     pygame.display.update()
