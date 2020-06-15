@@ -7,10 +7,10 @@ pygame.display.flip()
 
 def quiz():
     question = pygbutton.PygButton((200,80,300,80),"<question>")
-    answer1 = pygbutton.PygButton((250,260,200,30),"option1")
-    answer2 = pygbutton.PygButton((250,300,200,30),"option2")
-    answer3 = pygbutton.PygButton((250,340,200,30),"option3")
-    answer4 = pygbutton.PygButton((250,380,200,30),"option4")
+    answer1 = pygbutton.PygButton((100,260,200,30),"option1")
+    answer2 = pygbutton.PygButton((100,300,200,30),"option2")
+    answer3 = pygbutton.PygButton((100,340,200,30),"option3")
+    answer4 = pygbutton.PygButton((100,380,200,30),"option4")
 
     question.draw(screen)
     answer1.draw(screen)
