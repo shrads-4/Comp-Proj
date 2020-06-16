@@ -89,14 +89,15 @@ while running:
             if Y[i]>=640:
                 Y[i]=0
                 X[i]=XList[random.randint(0,3)]
-                '''
+                
                 spaced=True
                 while spaced:
                     for j in range(noOfObstacles):
                         if X[i]==X[j] and math.fabs(Y[i]-Y[j])<=80:
-                            Y[i]-=math.fabs(Y[i]-Y[j])
+                           X[i]=XList[random.randrange(0,3)]
+                           j=0
                     else:
-                        spaced=False '''               
+                        spaced=False               
             else:
                 Y[i]+=5
     '''
