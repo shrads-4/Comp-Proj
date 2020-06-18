@@ -26,6 +26,7 @@ obstacleImg = imgList[random.randint(0, 3)]
 #obstacleX = XList[random.randrange(0, 3)]
 obstacleY = 0
 noOfObstacles=7
+Y_change=5
 
 #
 X,Y,imgD={},{},{}
@@ -85,6 +86,7 @@ while running:
     for i in range(noOfObstacles):
         if collide(playerX,playerY,X[i],Y[i]):
             gameOver(score)
+            Y_change=0
         else:
             if Y[i]>=640:
                 Y[i]=0
@@ -99,7 +101,7 @@ while running:
                     else:
                         spaced=False               
             else:
-                Y[i]+=5
+                Y[i]+=Y_change
     '''
     # obstacle movement
     else:
