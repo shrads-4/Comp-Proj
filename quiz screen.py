@@ -1,11 +1,13 @@
-import pygame,pygbutton
+import pygame,sys,pygbutton,time
 
 pygame.init()  
 screen = pygame.display.set_mode((700,600))
 pygame.display.set_caption("<name/topic>")
-pygame.display.flip()
+pygame.display.flip() 
+image = pygame.image.load('bulb.jpg')
 
 def quiz():
+    i=0
     question = pygbutton.PygButton((200,80,300,80),"<question>")
     answer1 = pygbutton.PygButton((100,260,200,30),"option1")
     answer2 = pygbutton.PygButton((100,300,200,30),"option2")
@@ -28,11 +30,13 @@ def quiz():
     answer3.draw(screen)
     answer4.draw(screen)
 
-running=True
-while running:
+
+while True:
+    screen.blit(image, (400,250)) 
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-            running=False
+            pygame.quit()
+            sys.exit()
 
     quiz()
 
