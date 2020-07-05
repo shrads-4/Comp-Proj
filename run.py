@@ -1,6 +1,7 @@
 import pygame
 import math
 import random
+import sys
 
 pygame.init()
 
@@ -34,7 +35,7 @@ for i in range(noOfObstacles):
     img=imgList[random.randint(0,3)]
     imgD[i]=img
     X[i]=XList[random.randint(0,3)]
-    Y[i]=obstacleY-125*i
+    Y[i]=obstacleY-120*i
 #
 
 def player(playerX, playerY):
@@ -64,7 +65,24 @@ def gameOver(score):
     gameText2 = gameFont.render('Score:'+str(score), True, (255, 255, 255))
     screen.blit(gameText2, (250, 300))
     
+def overlap(X,Y,i):
+    for j in range(noOfObstacles):
+        if j!=i:
+            if X[j]==X[i] and math.fabs(Y[j]-Y[i])<80:
+                return True    
+    else:
+        return False
 
+def spaced(X,Y,i):
+    if overlap(X,Y,i):
+        try:
+            X[i]=XList[i+1]
+        except:
+            pass
+        Y[i]-=30
+        spaced(X,Y,i)
+    else:
+        return
 
 # game loop
 running = True
@@ -90,8 +108,8 @@ while running:
         else:
             if Y[i]>=640:
                 Y[i]=0
-                X[i]=XList[random.randint(0,3)]
-                
+                X[i]=XList[random.randint(0,3)]                
+                '''
                 spaced=True
                 while spaced:
                     for j in range(noOfObstacles):
@@ -99,7 +117,9 @@ while running:
                            X[i]=XList[random.randrange(0,3)]
                            j=0
                     else:
-                        spaced=False               
+                        spaced=False  '''
+                spaced(X,Y,i)
+
             else:
                 Y[i]+=Y_change
     '''
