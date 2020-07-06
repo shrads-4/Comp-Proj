@@ -98,38 +98,23 @@ while running:
     pygame.display.set_icon(icon)
 
     # game over
-    '''if collide(playerX, playerY, obstacleX, obstacleY):
-        gameOver(score)
-    '''
+   
     for i in range(noOfObstacles):
         if collide(playerX,playerY,X[i],Y[i]):
             gameOver(score)
             Y_change=0
+            for j in range(noOfObstacles):
+                Y[j]=playerY
         else:
             if Y[i]>=640:
                 Y[i]=0
                 X[i]=XList[random.randint(0,3)]                
-                '''
-                spaced=True
-                while spaced:
-                    for j in range(noOfObstacles):
-                        if X[i]==X[j] and math.fabs(Y[i]-Y[j])<=80:
-                           X[i]=XList[random.randrange(0,3)]
-                           j=0
-                    else:
-                        spaced=False  '''
+                
                 spaced(X,Y,i)
 
             else:
                 Y[i]+=Y_change
-    '''
-    # obstacle movement
-    else:
-        if obstacleY >= 640:
-            obstacleY = 0
-            obstacleX = XList[random.randrange(0, 3)]
-        obstacleY += 5
-    '''
+    
     # keyboard input
     for event in pygame.event.get():
         # action on clicking the x
