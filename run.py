@@ -105,10 +105,13 @@ def returnButton(mouse):
 
 
 over = True
+c=0
 # game loop
 running = True
+quiz=False
 
 while running:
+    c+=1
 
     # background
     screen.blit(background, (0, 0))
@@ -119,9 +122,10 @@ while running:
     pygame.display.set_icon(icon)
 
     # game over
-
     for i in range(noOfObstacles):
         if collide(playerX, playerY, X[i], Y[i]):
+            if over:
+                score=c
             gameOver(score)
             over = False
             Y_change = 0
@@ -140,6 +144,10 @@ while running:
 
             else:
                 Y[i] += Y_change
+    # quiz screen
+    if c%1000==0:
+        running=False
+        quiz=True
 
     # keyboard input
     for event in pygame.event.get():
@@ -159,3 +167,6 @@ while running:
     obstacle(imgD, X, Y)
     player(playerX, playerY)
     pygame.display.update()
+
+while quiz:
+    import quizScreen
