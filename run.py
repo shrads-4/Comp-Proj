@@ -21,8 +21,8 @@ buttonX = 300
 buttonY = 400
 color_light = (100, 100, 100)
 color_dark = (50, 50, 50)
-smallfont = pygame.font.SysFont('Corbel',15)
-returnText = smallfont.render('return to home page' , True ,(255,255,255) ) 
+smallfont = pygame.font.SysFont('Corbel', 15)
+returnText = smallfont.render('return to home page', True, (255, 255, 255))
 
 XList = [225, 330, 425, 520]
 
@@ -66,7 +66,7 @@ def collide(playerX, playerY, obstacleX, obstacleY):
 
 
 def gameOver(score):
-    gameFont = pygame.font.SysFont('Corbel',64)
+    gameFont = pygame.font.SysFont('Corbel', 64)
     gameText1 = gameFont.render('GAME OVER', True, (255, 255, 255))
     screen.blit(gameText1, (200, 200))
     gameText2 = gameFont.render('Score:'+str(score), True, (255, 255, 255))
@@ -94,6 +94,17 @@ def spaced(X, Y, i):
         return
 
 
+def returnButton(mouse):
+    if buttonX <= mouse[0] <= buttonX+140 and buttonY <= mouse[1] <= buttonY+40:
+        pygame.draw.rect(screen, color_light, [buttonX, buttonY, 140, 40])
+        #if event.type==pygame.MOUSEBUTTONDOWN:
+            #import homepage.py
+    else:
+        pygame.draw.rect(screen, color_dark, [buttonX, buttonY, 140, 40])
+    screen.blit(returnText, (buttonX+10, buttonY+10))
+
+
+over = True
 # game loop
 running = True
 
@@ -112,18 +123,14 @@ while running:
     for i in range(noOfObstacles):
         if collide(playerX, playerY, X[i], Y[i]):
             gameOver(score)
+            over = False
             Y_change = 0
-            mouse = pygame.mouse.get_pos()
-            if buttonX <= mouse[0] <= buttonX+140 and buttonY <= mouse[1] <= buttonY+40:
-                pygame.draw.rect(screen, color_light, [
-                                 buttonX, buttonY, 140, 40])
-            else:
-                pygame.draw.rect(screen, color_dark, [
-                                 buttonX, buttonY, 140, 40])
-            screen.blit(returnText, (buttonX+10, buttonY+10))
-
             for j in range(noOfObstacles):
                 Y[j] = playerY
+
+            mouse = pygame.mouse.get_pos()
+            returnButton(mouse)
+
         else:
             if Y[i] >= 640:
                 Y[i] = 0
@@ -141,12 +148,13 @@ while running:
             running = False
         # action on pressing arrow keys
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
-                if XList.index(playerX) != 3:
-                    playerX = XList[XList.index(playerX)+1]
-            elif event.key == pygame.K_LEFT:
-                if XList.index(playerX) != 0:
-                    playerX = XList[XList.index(playerX)-1]
+            if over:
+                if event.key == pygame.K_RIGHT:
+                    if XList.index(playerX) != 3:
+                        playerX = XList[XList.index(playerX)+1]
+                elif event.key == pygame.K_LEFT:
+                    if XList.index(playerX) != 0:
+                        playerX = XList[XList.index(playerX)-1]
 
     obstacle(imgD, X, Y)
     player(playerX, playerY)
