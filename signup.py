@@ -1,9 +1,12 @@
 import pygame as pg
+import os
+
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 
 def signup_page():
     pg.init()
-    screen = pg.display.set_mode((800, 640))
+    screen = pg.display.set_mode((800, 640), pg.RESIZABLE)
     COLOR_INACTIVE = pg.Color('lightskyblue3')
     COLOR_ACTIVE = pg.Color('dodgerblue2')
     FONT = pg.font.Font(None, 32)

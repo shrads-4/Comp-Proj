@@ -1,7 +1,10 @@
 import pygame,sys,pygbutton,time
+import os
+
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 pygame.init()  
-screen = pygame.display.set_mode((700,600))
+screen = pygame.display.set_mode((800,640),pygame.RESIZABLE)
 pygame.display.set_caption("<name/topic>")
 pygame.display.flip() 
 image = pygame.image.load('bulb.jpg')
@@ -30,13 +33,12 @@ def quiz():
     answer3.draw(screen)
     answer4.draw(screen)
 
-
-while True:
+running=True
+while running:
     screen.blit(image, (400,250)) 
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-            pygame.quit()
-            sys.exit()
+            running=False
 
     quiz()
 
