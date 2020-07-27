@@ -168,5 +168,27 @@ while running:
     player(playerX, playerY)
     pygame.display.update()
 
+if quiz:
+    noOfObstacles=4
+    for i in range(noOfObstacles):
+        X[i]=XList[i]
+        Y[i]=300
+
 while quiz:
-    import quizScreen
+    # background
+    screen.blit(background, (0, 0))
+
+    #title and icon
+    pygame.display.set_caption("NameOfGame")
+    icon = pygame.image.load('vampire.png')
+    pygame.display.set_icon(icon)
+    
+    for i in range(noOfObstacles):
+        Y[i]+=Y_change
+
+    if Y[0]==playerY-100:
+        import quizScreen
+    
+    obstacle(imgD, X, Y)
+    player(playerX, playerY)
+    pygame.display.update()
