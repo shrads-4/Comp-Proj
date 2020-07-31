@@ -1,6 +1,6 @@
 import pygame as pg
-import signup
-from signup import signup_page
+#import signup
+#from signup import signup_page
 import os
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
@@ -87,7 +87,7 @@ def main():
             print('1')
         button('Sign up!',270,540,100,32)
         if 370>mouse[0]>270 and 572>mouse[1]>540 and click[0]==1:
-            signup_page()
+            import signuptrial
         button('Forgot password?',520,540,150,32)
         if 670>mouse[0]>520 and 572>mouse[1]>540 and click[0]==1:
             print('3')
