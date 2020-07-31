@@ -87,7 +87,7 @@ def main():
             print('1')
         button('Sign up!',270,540,100,32)
         if 370>mouse[0]>270 and 572>mouse[1]>540 and click[0]==1:
-            import signuptrial
+            import signup
         button('Forgot password?',520,540,150,32)
         if 670>mouse[0]>520 and 572>mouse[1]>540 and click[0]==1:
             print('3')

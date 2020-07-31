@@ -103,92 +103,96 @@ def returnButton(mouse):
         pygame.draw.rect(screen, color_dark, [buttonX, buttonY, 140, 40])
     screen.blit(returnText, (buttonX+10, buttonY+10))
 
-
+done = False
 over = True
 c=0
 # game loop
 running = True
 quiz=False
+while not done:
+    while running:
+        c+=1
 
-while running:
-    c+=1
+        # background
+        screen.blit(background, (0, 0))
 
-    # background
-    screen.blit(background, (0, 0))
+        #title and icon
+        pygame.display.set_caption("NameOfGame")
+        icon = pygame.image.load('vampire.png')
+        pygame.display.set_icon(icon)
 
-    #title and icon
-    pygame.display.set_caption("NameOfGame")
-    icon = pygame.image.load('vampire.png')
-    pygame.display.set_icon(icon)
-
-    # game over
-    for i in range(noOfObstacles):
-        if collide(playerX, playerY, X[i], Y[i]):
-            if over:
-                score=c
-            gameOver(score)
-            over = False
-            Y_change = 0
-            for j in range(noOfObstacles):
-                Y[j] = playerY
-
-            mouse = pygame.mouse.get_pos()
-            returnButton(mouse)
-
-        else:
-            if Y[i] >= 640:
-                Y[i] = 0
-                X[i] = XList[random.randint(0, 3)]
-
-                spaced(X, Y, i)
+        # game over
+        for i in range(noOfObstacles):
+            if collide(playerX, playerY, X[i], Y[i]):
+                if over:
+                    score=c
+                    for j in range(noOfObstacles):
+                        Y[j] = playerY
+                    Y_change = 0
+                gameOver(score)
+                over = False
+                mouse = pygame.mouse.get_pos()
+                returnButton(mouse)
 
             else:
-                Y[i] += Y_change
-    # quiz screen
-    if c%1000==0:
-        running=False
-        quiz=True
+                if Y[i] >= 640:
+                    Y[i] = 0
+                    X[i] = XList[random.randint(0, 3)]
 
-    # keyboard input
-    for event in pygame.event.get():
-        # action on clicking the x
-        if event.type == pygame.QUIT:
-            running = False
-        # action on pressing arrow keys
-        if event.type == pygame.KEYDOWN:
-            if over:
-                if event.key == pygame.K_RIGHT:
-                    if XList.index(playerX) != 3:
-                        playerX = XList[XList.index(playerX)+1]
-                elif event.key == pygame.K_LEFT:
-                    if XList.index(playerX) != 0:
-                        playerX = XList[XList.index(playerX)-1]
+                    spaced(X, Y, i)
 
-    obstacle(imgD, X, Y)
-    player(playerX, playerY)
-    pygame.display.update()
+                else:
+                    Y[i] += Y_change
+        # quiz screen
+        if c%1000==0:
+            running=False
+            quiz=True
 
-if quiz:
-    noOfObstacles=4
-    for i in range(noOfObstacles):
-        X[i]=XList[i]
-        Y[i]=300
+        # keyboard input
+        for event in pygame.event.get():
+            # action on clicking the x
+            if event.type == pygame.QUIT:
+                done = True
+                running = False
+            # action on pressing arrow keys
+            if event.type == pygame.KEYDOWN:
+                if over:
+                    if event.key == pygame.K_RIGHT:
+                        if XList.index(playerX) != 3:
+                            playerX = XList[XList.index(playerX)+1]
+                    elif event.key == pygame.K_LEFT:
+                        if XList.index(playerX) != 0:
+                            playerX = XList[XList.index(playerX)-1]
 
-while quiz:
-    # background
-    screen.blit(background, (0, 0))
+        obstacle(imgD, X, Y)
+        player(playerX, playerY)
+        pygame.display.update()
 
-    #title and icon
-    pygame.display.set_caption("NameOfGame")
-    icon = pygame.image.load('vampire.png')
-    pygame.display.set_icon(icon)
+    if quiz:
+        noOfObstacles=4
+        for i in range(noOfObstacles):
+            X[i]=XList[i]
+            Y[i]=300
+
+    while quiz:
+        # background
+        screen.blit(background, (0, 0))
+
+        #title and icon
+        pygame.display.set_caption("NameOfGame")
+        icon = pygame.image.load('vampire.png')
+        pygame.display.set_icon(icon)
+        
+        for i in range(noOfObstacles):
+            Y[i]+=Y_change
+
+        if Y[0]==playerY-100:
+            import quizScreen
+            quiz=False
+            running=True
+        
+        obstacle(imgD, X, Y)
+        player(playerX, playerY)
+        pygame.display.update()
     
-    for i in range(noOfObstacles):
-        Y[i]+=Y_change
-
-    if Y[0]==playerY-100:
-        import quizScreen
     
-    obstacle(imgD, X, Y)
-    player(playerX, playerY)
-    pygame.display.update()

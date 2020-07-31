@@ -22,10 +22,11 @@ def quiz():
     answer2.draw(screen)
     answer3.draw(screen)
     answer4.draw(screen)
+    '''
     buttonEvent = answer1.handleEvent(event)
     buttonEvent2= answer2.handleEvent(event)
     buttonEvent3= answer3.handleEvent(event)
-    buttonEvent4= answer4.handleEvent(event)
+    buttonEvent4= answer4.handleEvent(event)'''
 
     question.draw(screen)
     answer1.draw(screen)
