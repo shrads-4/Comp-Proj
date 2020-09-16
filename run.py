@@ -1,14 +1,16 @@
 import pygame
 import math
 import random
-import sys
 import os
+import time
+import quizScreen
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 pygame.init()
 
 score = 0
+level = 1
 
 # creating the screen
 screen = pygame.display.set_mode((800, 640), pygame.RESIZABLE)
@@ -39,12 +41,31 @@ noOfObstacles = 6
 Y_change = 5
 
 X, Y, imgD = {}, {}, {}
-for i in range(noOfObstacles):
-    img = imgList[random.randint(0, 3)]
-    imgD[i] = img
-    X[i] = XList[random.randint(0, 3)]
-    Y[i] = obstacleY-120*i
-#
+
+
+def obsDicts():
+    global noOfObstacles, imgList, XList, obstacleY, X, Y, imgD
+    for i in range(noOfObstacles):
+        img = imgList[random.randint(0, 3)]
+        imgD[i] = img
+        X[i] = XList[random.randint(0, 3)]
+        Y[i] = obstacleY-120*i
+
+
+obsDicts()
+
+
+def showlevel(level):
+    start_time = time.time()
+    levelfont = pygame.font.SysFont('Corbel', 75)
+    text = levelfont.render('Level: '+str(level), True, (255, 255, 255))
+    show = True
+    while show:
+        if time.time() - start_time < 3:
+            screen.blit(text, (250, 200))
+        else:
+            show = False
+        pygame.display.update()
 
 
 def player(playerX, playerY):
@@ -52,9 +73,9 @@ def player(playerX, playerY):
 
 
 def obstacle(imgD, X, Y):
+    global noOfObstacles
     for i in range(noOfObstacles):
         screen.blit(imgD[i], (X[i], Y[i]))
-    #
 
 
 def collide(playerX, playerY, obstacleX, obstacleY):
@@ -97,21 +118,47 @@ def spaced(X, Y, i):
 def returnButton(mouse):
     if buttonX <= mouse[0] <= buttonX+140 and buttonY <= mouse[1] <= buttonY+40:
         pygame.draw.rect(screen, color_light, [buttonX, buttonY, 140, 40])
-        #if event.type==pygame.MOUSEBUTTONDOWN:
-            #import homepage.py
+        # if event.type==pygame.MOUSEBUTTONDOWN:
+        #import homepage.py
     else:
         pygame.draw.rect(screen, color_dark, [buttonX, buttonY, 140, 40])
     screen.blit(returnText, (buttonX+10, buttonY+10))
 
+
+def questions():
+    global X, Y, Y_change, quiz, running, level, noOfObstacles, playerX, playerY
+    i = 1
+    while i and quiz:
+        correct = quizScreen.main('option1')
+        if not correct:
+            print('incorrect')
+            Y[i] = playerY
+            X[i] = playerX
+            Y_change = -1
+            quiz = False
+            running = True
+        else:
+            i += 1
+            if i == 4:
+                i = 0
+    if quiz:
+        noOfObstacles = 6
+        obsDicts()
+        level += 1
+        running = True
+        quiz = False
+
+
 done = False
 over = True
-c=0
-# game loop
+c = 0
 running = True
-quiz=False
+quiz = False
+levelChange = 200
 while not done:
+
     while running:
-        c+=1
+        c += 1
 
         # background
         screen.blit(background, (0, 0))
@@ -121,16 +168,21 @@ while not done:
         icon = pygame.image.load('vampire.png')
         pygame.display.set_icon(icon)
 
+        if c % levelChange == 1 and c != 1:
+            showlevel(level)
+            Y_change += 1
+
         # game over
         for i in range(noOfObstacles):
             if collide(playerX, playerY, X[i], Y[i]):
                 if over:
-                    score=c
+                    score = c
                     for j in range(noOfObstacles):
                         Y[j] = playerY
                     Y_change = 0
                 gameOver(score)
                 over = False
+                quiz = False
                 mouse = pygame.mouse.get_pos()
                 returnButton(mouse)
 
@@ -144,9 +196,9 @@ while not done:
                 else:
                     Y[i] += Y_change
         # quiz screen
-        if c%1000==0:
-            running=False
-            quiz=True
+        if c % levelChange == 0:
+            running = False
+            quiz = True
 
         # keyboard input
         for event in pygame.event.get():
@@ -154,6 +206,7 @@ while not done:
             if event.type == pygame.QUIT:
                 done = True
                 running = False
+                quiz = False
             # action on pressing arrow keys
             if event.type == pygame.KEYDOWN:
                 if over:
@@ -169,10 +222,10 @@ while not done:
         pygame.display.update()
 
     if quiz:
-        noOfObstacles=4
+        noOfObstacles = 4
         for i in range(noOfObstacles):
-            X[i]=XList[i]
-            Y[i]=300
+            X[i] = XList[i]
+            Y[i] = 300
 
     while quiz:
         # background
@@ -182,17 +235,13 @@ while not done:
         pygame.display.set_caption("NameOfGame")
         icon = pygame.image.load('vampire.png')
         pygame.display.set_icon(icon)
-        
-        for i in range(noOfObstacles):
-            Y[i]+=Y_change
 
-        if Y[0]==playerY-100:
-            import quizScreen
-            quiz=False
-            running=True
-        
+        for i in range(noOfObstacles):
+            Y[i] += Y_change
+
+            if Y[i] >= 450:
+                questions()
+
         obstacle(imgD, X, Y)
         player(playerX, playerY)
         pygame.display.update()
-    
-    
