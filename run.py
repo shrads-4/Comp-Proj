@@ -129,9 +129,8 @@ def questions():
     global X, Y, Y_change, quiz, running, level, noOfObstacles, playerX, playerY
     i = 1
     while i and quiz:
-        correct = quizScreen.main('option1')
+        correct = quizScreen.main()
         if not correct:
-            print('incorrect')
             Y[i] = playerY
             X[i] = playerX
             Y_change = -1
@@ -154,7 +153,7 @@ over = True
 c = 0
 running = True
 quiz = False
-levelChange = 200
+levelChange = 1000
 while not done:
 
     while running:
@@ -168,7 +167,7 @@ while not done:
         icon = pygame.image.load('vampire.png')
         pygame.display.set_icon(icon)
 
-        if c % levelChange == 1 and c != 1:
+        if c % levelChange == 1 and c != 1 and over:
             showlevel(level)
             Y_change += 1
 
@@ -196,7 +195,7 @@ while not done:
                 else:
                     Y[i] += Y_change
         # quiz screen
-        if c % levelChange == 0:
+        if c % levelChange == 0 and over:
             running = False
             quiz = True
 
