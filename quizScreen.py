@@ -75,8 +75,7 @@ def main():
             questionType = queType(event, screen)
             running = False
         if questionType:
-            #screen.fill((174,238,238))
-            screen.fill((216,191,216))
+            screen.fill((253,253,91))
             queTypeVariable = False
         pygame.display.update()
     else:

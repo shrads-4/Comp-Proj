@@ -2,6 +2,7 @@ import pygame as pg
 #import signup
 #from signup import signup_page
 import os
+import homepage
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -84,7 +85,7 @@ def main():
         click=pg.mouse.get_pressed()
         button('Login',390,450,100,32)
         if 490>mouse[0]>390 and 482>mouse[1]>450 and click[0]==1:
-            print('1')
+            homepage.main()
         button('Sign up!',270,540,100,32)
         if 370>mouse[0]>270 and 572>mouse[1]>540 and click[0]==1:
             import signup

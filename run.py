@@ -109,12 +109,13 @@ def run():
         returnText = smallfont.render('return to home page', True, (255, 255, 255))
         if buttonX <= mouse[0] <= buttonX+140 and buttonY <= mouse[1] <= buttonY+40:
             pygame.draw.rect(runScreen, color_light, [buttonX, buttonY, 140, 40])
-            # if event.type==pygame.MOUSEBUTTONDOWN:
-            #send score not c to mysql
-            #return
+            for event in pygame.event.get():
+                if event.type==pygame.MOUSEBUTTONDOWN:
+                    return False
         else:
             pygame.draw.rect(runScreen, color_dark, [buttonX, buttonY, 140, 40])
         runScreen.blit(returnText, (buttonX+10, buttonY+10))
+        return True
 
 
     def questions(X, Y, Y_change, quiz, running, level, noOfObstacles, playerX, playerY, imgList, XList, obstacleY, imgD):
@@ -148,7 +149,7 @@ def run():
     c = 0
     running = True
     quiz = False
-    levelChange = 1000
+    levelChange = 200
 
     while not done:
 
@@ -179,7 +180,10 @@ def run():
                     over = False
                     quiz = False
                     mouse = pygame.mouse.get_pos()
-                    returnButton(mouse, runScreen)
+                    running = returnButton(mouse, runScreen)
+                    if not running:
+                        done = True
+                        break
 
                 else:
                     if Y[i] >= 640:
@@ -240,6 +244,8 @@ def run():
             obstacle(imgD, X, Y, noOfObstacles, runScreen)
             player(playerX, playerY, runScreen, playerImg)
             pygame.display.update()
+
+    return score
 
 if __name__ == "__main__":
     run()
