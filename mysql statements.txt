@@ -1,0 +1,52 @@
+create table geography(
+q_no integer primary key,
+question varchar(200));
+
+insert into geography values(1,"Which of the following places receives the highest rainfall in the world?"),(2,"Corbett National Park is in"),(3,"Which of the following imaginary line almost divides India into two equal parts?"),(4,"Which of the following water bodies is the home of Lakshadweep?"),(5,"Which of the following river has the largest river basin in India?"),(6,"The landmass of which of the following continents is the least?"),(7,"	
+Which of the following is tropical grassland?"),(8,"The island of Sri Lanka was formerly known as"),(9,"The largest country of the world by geographical area is"),(10,"The islands of Seychelles are located in the");
+
+create table geo_options(
+name integer primary key,
+option_1 varchar(50),
+option_2 varchar(50),
+option_3 varchar(50),
+option_4 varchar(50));
+
+insert into geo_options values(1,"Mawsynram","Cherrapunji","Silchar","Guwahati"),(2,"Uttarakhand","Uttar Pradesh","Himachal Pradesh","Punjab"),(3,"Tropic of Cancer","Equator","Tropic of Capricorn","Arctic Circle"),(4,"Arabian Sea","Bay of Bengal","Indian Ocean","Atlantic Ocean"),(5,"Ganga","Indus","Brahmaputra","Godavari"),(6,"Australia","Europe","Antarctica","Africa"),(7,"Savannah","Taiga","Pampas","Prairies"),(8,"Ceylon","Madagascar","Tasmania","None of the above"),(9,"Russia","Canada","USA","Australia"),(10,"Indian Ocean","Atlantic Ocean","Pacific Ocean","Arctic Ocean");
+
+create table history(
+q_no integer primary key,
+question varchar(200));
+
+insert into history values(1,"To which king belongs the Lion capital at Sarnath?"),(2,"Tipu sultan was the ruler of"),(3,"The British set up their first factory in India at"),(4,"Who is called the 'Father of the Indian National Congress'?"),(5,"Who constructed the Grand Trunk Road?"),(6,"Who painted the Mona Lisa?"),(7,"	
+The Industrial Revolution was started in which country?"),(8,"'Mein Kampf' is the autobiography of which political leader?"),(9,"Which pharaoh built The Great Pyramid of Giza?"),(10,"Who was the first President of the United States of America?");
+
+create table geo_options(
+name integer primary key,
+option_1 varchar(50),
+option_2 varchar(50),
+option_3 varchar(50),
+option_4 varchar(50));
+
+insert into history_options values(1,"Ashoka","Chandragupta","Harsha","Kanishka"),(2,"Mysore","Madurai","Hyderabad","Vijayanagar"),(3,"Surat","Bombay","Madras","Calcutta"),(4,"A.O. Hume","Mahatma Gandhi","Jawaharlal Nehru","Lokmanya Tilak"),(5,"Sher Shah Suri","Akbar","Ashoka","Samudra Gupta"),(6,"Leonardo Da Vinci","Picasso","Michelangelo","Vincent Van Gogh"),(7,"England","France","Spain","Germany"),(8,"Adolf Hitler","Winston Churchill","Joseph Stalin","Benito Mussolini "),(9,"Khufu","Sneferu","Tutankhamun","None of the above"),(10,"George Washington","Abraham Lincoln","Theodore Roosevelt","Thomas Jefferson");
+
+create table famous_people(
+q_no integer primary key,
+question varchar(200));
+
+insert into famous_people values(1,"Dr. M.S.Subbalakshmi has distinguished herself in the field of"),(2,"Who was the first woman to scale the Mount Everest?"),(3,"Who was the first posthumous recipient of Bharat Ratna?"),(4,"Who is called the 'Father of White Revolution' in India?"),(5,"R.K. Laxman is a renowned"),(6,"Which actor holds the record for most Oscar nominations?"),(7,"	
+Who wrote the Indian National Anthem?"),(8,"Who is the Flying Sikh of India?"),(9,"Professor Amartya Sen is famous in which of the fields"),(10,"Who was known as Iron man of India?");
+
+create table famous_options(
+name integer primary key,
+option_1 varchar(50),
+option_2 varchar(50),
+option_3 varchar(50),
+option_4 varchar(50));
+
+insert into history_options values(1,"Vocal Music","Bharathanatyam","Playing Violin","Kathak"),(2,"Junko Tabei","Bachendri Pal","Anshu Jamsenpa","Lhakpa Sherpa"),(3,"Lal Bahadur Shastri","B.R.Ambedkar","K.Kamraj","M.G.Ramachandran"),(4,"Verghese Kurien","M. S. Swaminathan","Vikram Sarabhai","Baba Amte"),(5,"Cartoonist","Writer","Cricketer","Politician"),(6,"Meryl Streep","Denzel Washington","Al Pacino","Helen Hayes"),(7,"Rabindranath Tagore","Bakim Chandra Chatterji","Swami Vivekanand","None of the above"),(8,"Milkha Singh","Joginder Singh","Mohinder Singh","Ajit Pal Singh"),(9,"Economics","Electronics","Geology","Politics"),(10,"Sardar Vallabhbhai Patel","Subhash Chandra Bose","Jawaharlal Nehru","Govind Ballabh Pant");
+
+
+
+
+
