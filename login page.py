@@ -85,6 +85,12 @@ def main():
         click=pg.mouse.get_pressed()
         button('Login',390,450,100,32)
         if 490>mouse[0]>390 and 482>mouse[1]>450 and click[0]==1:
+            username, pwd = input_boxes[0].text, input_boxes[1].text
+            print(username, pwd)
+            #cur.execute('select username, pwd from user_dets where username = {}'.format(username))
+            #result = cur.fetchone()
+            #if result[1] == pwd:
+                #homepage.main()
             homepage.main()
         button('Sign up!',270,540,100,32)
         if 370>mouse[0]>270 and 572>mouse[1]>540 and click[0]==1:
