@@ -1,8 +1,8 @@
 import pygame as pg
-#import signup
-#from signup import signup_page
 import os
 import homepage
+import time
+import mysql.connector
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -60,6 +60,42 @@ def button(msg,x,y,w,h):
     textrect.center=((x+(w//2)),(y+(h//2)))
     screen.blit(textsurf,textrect)
     
+def showError(message):
+    start_time = time.time()
+    levelfont = pg.font.SysFont('Corbel', 25)
+    text = levelfont.render(message, True, (0, 0, 0))
+    show = True
+    while show:
+        if time.time() - start_time < 3:
+            screen.blit(text, (200, 200))
+        else:
+            show = False
+        pg.display.update()
+
+def validatePwd(username, pwd):
+    con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha4', database = 'comp_proj')
+    if con.is_connected():
+        try:
+            cur = con.cursor()
+            cur.execute('select pwd from user_dets where username = "{}"'.format(username))
+            result = cur.fetchone()
+            if result:
+                if pwd == result[0]:
+                    return True
+                else:
+                    showError('Incorrect Password. Try Again.')
+                    return False
+            else:
+                showError('Incorrect Username. Try Again.')
+                return False
+        except mysql.connector.Error:
+            showError('Database Issue; Please Try Later')
+        finally:
+            con.close()
+    else:
+        showError('Error Connecting to Database; Please Try Later')
+    return False
+
 def main():
     clock = pg.time.Clock()
     input_box1 = InputBox(350, 250, 140, 32)
@@ -86,12 +122,8 @@ def main():
         button('Login',390,450,100,32)
         if 490>mouse[0]>390 and 482>mouse[1]>450 and click[0]==1:
             username, pwd = input_boxes[0].text, input_boxes[1].text
-            print(username, pwd)
-            #cur.execute('select username, pwd from user_dets where username = {}'.format(username))
-            #result = cur.fetchone()
-            #if result[1] == pwd:
-                #homepage.main()
-            homepage.main()
+            if username and pwd and validatePwd(username, pwd):
+                homepage.main()
         button('Sign up!',270,540,100,32)
         if 370>mouse[0]>270 and 572>mouse[1]>540 and click[0]==1:
             import signup
