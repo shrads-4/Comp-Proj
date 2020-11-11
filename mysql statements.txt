@@ -21,7 +21,7 @@ question varchar(200));
 insert into history values(1,"To which king belongs the Lion capital at Sarnath?"),(2,"Tipu sultan was the ruler of"),(3,"The British set up their first factory in India at"),(4,"Who is called the 'Father of the Indian National Congress'?"),(5,"Who constructed the Grand Trunk Road?"),(6,"Who painted the Mona Lisa?"),(7,"	
 The Industrial Revolution was started in which country?"),(8,"'Mein Kampf' is the autobiography of which political leader?"),(9,"Which pharaoh built The Great Pyramid of Giza?"),(10,"Who was the first President of the United States of America?");
 
-create table geo_options(
+create table history_options(
 name integer primary key,
 option_1 varchar(50),
 option_2 varchar(50),
@@ -44,7 +44,7 @@ option_2 varchar(50),
 option_3 varchar(50),
 option_4 varchar(50));
 
-insert into history_options values(1,"Vocal Music","Bharathanatyam","Playing Violin","Kathak"),(2,"Junko Tabei","Bachendri Pal","Anshu Jamsenpa","Lhakpa Sherpa"),(3,"Lal Bahadur Shastri","B.R.Ambedkar","K.Kamraj","M.G.Ramachandran"),(4,"Verghese Kurien","M. S. Swaminathan","Vikram Sarabhai","Baba Amte"),(5,"Cartoonist","Writer","Cricketer","Politician"),(6,"Meryl Streep","Denzel Washington","Al Pacino","Helen Hayes"),(7,"Rabindranath Tagore","Bakim Chandra Chatterji","Swami Vivekanand","None of the above"),(8,"Milkha Singh","Joginder Singh","Mohinder Singh","Ajit Pal Singh"),(9,"Economics","Electronics","Geology","Politics"),(10,"Sardar Vallabhbhai Patel","Subhash Chandra Bose","Jawaharlal Nehru","Govind Ballabh Pant");
+insert into famous_options values(1,"Vocal Music","Bharathanatyam","Playing Violin","Kathak"),(2,"Junko Tabei","Bachendri Pal","Anshu Jamsenpa","Lhakpa Sherpa"),(3,"Lal Bahadur Shastri","B.R.Ambedkar","K.Kamraj","M.G.Ramachandran"),(4,"Verghese Kurien","M. S. Swaminathan","Vikram Sarabhai","Baba Amte"),(5,"Cartoonist","Writer","Cricketer","Politician"),(6,"Meryl Streep","Denzel Washington","Al Pacino","Helen Hayes"),(7,"Rabindranath Tagore","Bakim Chandra Chatterji","Swami Vivekanand","None of the above"),(8,"Milkha Singh","Joginder Singh","Mohinder Singh","Ajit Pal Singh"),(9,"Economics","Electronics","Geology","Politics"),(10,"Sardar Vallabhbhai Patel","Subhash Chandra Bose","Jawaharlal Nehru","Govind Ballabh Pant");
 
 
 

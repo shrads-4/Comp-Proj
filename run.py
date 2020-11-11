@@ -71,7 +71,7 @@ def run():
 
 
     def gameOver(score, runScreen):
-        gameFont = pygame.font.SysFont('Corbel', 64)
+        gameFont = pygame.font.SysFont('Corbel', 64, bold = True)
         gameText1 = gameFont.render('GAME OVER', True, (255, 255, 255))
         runScreen.blit(gameText1, (200, 200))
         gameText2 = gameFont.render('Score:'+str(score), True, (255, 255, 255))
@@ -105,7 +105,7 @@ def run():
         buttonY = 400
         color_light = (100, 100, 100)
         color_dark = (50, 50, 50)
-        smallfont = pygame.font.SysFont('Corbel', 15)
+        smallfont = pygame.font.SysFont('Corbel', 15, bold = True)
         returnText = smallfont.render('return to home page', True, (255, 255, 255))
         if buttonX <= mouse[0] <= buttonX+140 and buttonY <= mouse[1] <= buttonY+40:
             pygame.draw.rect(runScreen, color_light, [buttonX, buttonY, 140, 40])
@@ -114,7 +114,7 @@ def run():
                     return False
         else:
             pygame.draw.rect(runScreen, color_dark, [buttonX, buttonY, 140, 40])
-        runScreen.blit(returnText, (buttonX+10, buttonY+10))
+        runScreen.blit(returnText, (buttonX+5, buttonY+10))
         return True
 
 

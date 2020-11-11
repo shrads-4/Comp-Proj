@@ -11,16 +11,17 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
 
 def quiz(event, screen, que="<question>", options=["option1", "option2", "option3", "option4"]):
+    
     Qfont = pygame.font.SysFont('Corbel', 30)
     text = Qfont.render(que, True, (0, 0, 0))
-    screen.blit(text, (75,40))
+    screen.blit(text, (25,30))
     
-    font = pygame.font.SysFont('Corbel', 20)
+    font = pygame.font.SysFont('Corbel', 20, bold = True)
 
-    answer1 = pygbutton.PygButton((100, 260, 200, 30), options[0], font = font, bgcolor = (226,226,226))
-    answer2 = pygbutton.PygButton((100, 300, 200, 30), options[1], font = font, bgcolor = (226,226,226))
-    answer3 = pygbutton.PygButton((100, 340, 200, 30), options[2], font = font, bgcolor = (226,226,226))
-    answer4 = pygbutton.PygButton((100, 380, 200, 30), options[3], font = font, bgcolor = (226,226,226))
+    answer1 = pygbutton.PygButton((100, 260, 200, 30), options[0], font = font, bgcolor = (174,214,220))
+    answer2 = pygbutton.PygButton((100, 300, 200, 30), options[1], font = font, bgcolor = (174,214,220))
+    answer3 = pygbutton.PygButton((100, 340, 200, 30), options[2], font = font, bgcolor = (174,214,220))
+    answer4 = pygbutton.PygButton((100, 380, 200, 30), options[3], font = font, bgcolor = (174,214,220))
     
     answer1.draw(screen)
     answer2.draw(screen)
@@ -63,13 +64,9 @@ def queType(event, screen, T):
         return T[2]
 
 def TypeList():
-    typeList = ['food', 'tourism', 'history', 'geography', 'music']
-    t1 = typeList[random.randrange(0,4)]
-    del typeList[typeList.index(t1)]
-    t2 = typeList[random.randrange(0,3)]
-    del typeList[typeList.index(t2)]
-    t3 = typeList[random.randrange(0,2)]
-    return [t1, t2, t3]
+    typeList = ['food', 'tourism', 'history', 'geography', 'music', 'wildlife', 'sports', 'famous']
+    random.shuffle(typeList)
+    return typeList[:3]
 
 def dbQueData(screen, questionType):
     con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha4', database = 'comp_proj')
@@ -85,6 +82,18 @@ def dbQueData(screen, questionType):
             options = list(cur.fetchone())[1:]
             answer = options[0]
             random.shuffle(options)
+            if questionType in ('food','tourism'):
+                cur.execute('select link from {} where q_no = {};'.format(questionType, q_no))
+                link = cur.fetchone()[0]
+                if link:
+                    image = pygame.image.load(link)
+                    screen.blit(image,(0,0))
+                else:
+                    bg = pygame.image.load("QImages\\background.png")
+                    screen.blit(bg,(0,0))
+            else:
+                bg = pygame.image.load("QImages\\background.png")
+                screen.blit(bg,(0,0))
         except mysql.connector.Error:
             error_image = pygame.image.load('traffic-sign.png')
             screen.blit(error_image, (350,300))
@@ -102,6 +111,7 @@ def main():
     queTypeVariable = True
     questionType = False
     T = TypeList()
+    screen.fill((226,226,226))
     
     while queTypeVariable:
         for event in pygame.event.get():
@@ -111,7 +121,6 @@ def main():
             questionType = queType(event, screen, T)
             running = False
         if questionType:
-            screen.fill((226,226,226))
             question, options, answer = dbQueData(screen, questionType)
             queTypeVariable = False
         pygame.display.update()

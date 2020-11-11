@@ -10,13 +10,14 @@ def main():
 
     clock = pg.time.Clock()
 
-    COLOR_INACTIVE = (100, 80, 255)
-    COLOR_ACTIVE = (100, 200, 255)
-    COLOR_LIST_INACTIVE = (255, 100, 100)
-    COLOR_LIST_ACTIVE = (255, 150, 150)
     screen = pg.display.set_mode((800, 640), pg.RESIZABLE)
-    FONT = pg.font.Font(None, 42)
-    font=pg.font.Font(None, 30)
+    COLOR_INACTIVE = pg.Color(226,226,226)
+    COLOR_ACTIVE = pg.Color(74,83,107)
+    BFONT = pg.font.SysFont('Corbel', 15, bold=True)
+    font=pg.font.SysFont('Corbel', 32, bold=True)
+    FONT = pg.font.SysFont('Corbel', 25, bold=True)
+    COLOR_LIST_INACTIVE = (226,226,226)
+    COLOR_LIST_ACTIVE = (255,154,141)
 
     class DropDown():
         # Test List
@@ -34,8 +35,7 @@ def main():
         def draw_main(self, win, text=''):
             pg.draw.rect(win, self.color_menu, (self.x, self.y, self.w, self.h), 0)
             if text != '':
-                font = pg.font.SysFont(None, 30)
-                msg = font.render(text, 1, (0,0,0))
+                msg = FONT.render(text, 1, (0,0,0))
                 screen.blit(msg, (self.x + (self.w // 2 - msg.get_width() // 2), self.y + (self.h // 2 - msg.get_height() // 2)))
 
         # Draw list of option 'calibration' and 'test'
@@ -46,8 +46,7 @@ def main():
                     opt_list.append(pg.draw.rect(win, self.color_option, (self.x, self.y + (i+1)*self.h, self.w, self.h), 0))
 
                     # write each option
-                    font = pg.font.SysFont(None, 30)
-                    msg = font.render(text[i], 1, (0, 0, 0))
+                    msg = FONT.render(text[i], 1, (0, 0, 0))
                     screen.blit(msg, (self.x + (self.w // 2 - msg.get_width() // 2),
                                         self.y + (i+1)*self.h + (self.h // 2 - msg.get_height() // 2)))
 
@@ -70,7 +69,7 @@ def main():
             self.rect = pg.Rect(x, y, w, h)
             self.color = COLOR_INACTIVE
             self.text = text
-            self.txt_surface = FONT.render(text, True, self.color)
+            self.txt_surface = font.render(text, True, self.color)
             self.active = False
 
         def handle_event(self, event):
@@ -88,7 +87,7 @@ def main():
                         self.text = self.text[:-1]
                     else:
                         self.text += event.unicode
-                    self.txt_surface = FONT.render(self.text, True, self.color)
+                    self.txt_surface = font.render(self.text, True, self.color)
 
         def update(self):
             width = max(200, self.txt_surface.get_width()+10)
@@ -101,12 +100,12 @@ def main():
     def button(msg,x,y,w,h):
         
         pg.draw.rect(screen,(255,100,100),(x,y,w,h))
-        textsurf,textrect=textobjects(msg,font)
+        textsurf,textrect=textobjects(msg,BFONT)
         textrect.center=((x+(w//2)),(y+(h//2)))
         screen.blit(textsurf,textrect)
 
     def textobjects(text,font):
-        textsurface=font.render(text,True,(0,0,0))
+        textsurface=FONT.render(text,True,(0,0,0))
         return textsurface,textsurface.get_rect()
 
 
@@ -118,7 +117,7 @@ def main():
     score = None
 
     while not done:
-        screen.fill(pg.Color('lightskyblue3'))
+        screen.fill((174,214,220))
         
         if score:
             start_time = time.time()
@@ -166,8 +165,8 @@ def main():
         button('High score',300,350,200,42)
         if 500>pos[0]>300 and 392>pos[1]>350 and click[0]==1:
             print('2')
-        screen.blit(FONT.render('Welcome to', True,(0,0,0)),(320,50))
-        screen.blit(FONT.render('<name of game>',True,(0,0,0)),(280,150))
+        screen.blit(font.render('Welcome to', True,(0,0,0)),(320,50))
+        screen.blit(font.render('<name of game>',True,(0,0,0)),(280,150))
         list1.draw_main(screen, "User details")
         list1.draw_opt(screen, ["Change password", "Delete account"])
 

@@ -1,14 +1,18 @@
 import pygame as pg
 import os
+import time
+import mysql.connector
+import homepage
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 pg.init()
 screen = pg.display.set_mode((800, 640), pg.RESIZABLE)
-COLOR_INACTIVE = pg.Color('lightskyblue3')
-COLOR_ACTIVE = pg.Color('dodgerblue2')
-FONT = pg.font.Font(None, 32)
-font=pg.font.Font(None, 20)
+COLOR_INACTIVE = pg.Color(226,226,226)
+COLOR_ACTIVE = pg.Color(74,83,107)
+RFONT = pg.font.SysFont('Corbel', 20, bold=True)
+font=pg.font.SysFont('Corbel', 32, bold=True)
+FONT = pg.font.SysFont('Corbel', 25, bold=True)
 
 class InputBox:
 
@@ -52,7 +56,59 @@ class InputBox:
         # Blit the rect.
         pg.draw.rect(screen, self.color, self.rect, 2)
 
+def button(msg,x,y,w,h):
+    
+    pg.draw.rect(screen,(255,154,141),(x,y,w,h))
+    textsurf,textrect=textobjects(msg,RFONT)
+    textrect.center=((x+(w//2)),(y+(h//2)))
+    screen.blit(textsurf,textrect)
 
+def textobjects(text,font):
+    textsurface=font.render(text,True,(0,0,0))
+    return textsurface,textsurface.get_rect()
+    
+def showError(message, x = 200, y = 600):
+    start_time = time.time()
+    levelfont = pg.font.SysFont('Corbel', 25, italic = True)
+    text = levelfont.render(message, True, (255,0,0))
+    show = True
+    while show:
+        if time.time() - start_time < 3:
+            screen.blit(text, (x, y))
+        else:
+            show = False
+        pg.display.update()
+
+def validateUsername(username, pwd, email, dob):
+    con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha4', database = 'comp_proj')
+    if con.is_connected():
+        try:
+            cur = con.cursor(buffered = 'True')
+            cur.execute('select username from user_dets;')
+            result = []
+            for uName in cur.fetchall():
+                result+=uName
+            print(result)
+            if username in result:
+                showError('This username is taken. Enter a different one.', 150)
+                return False
+            else:
+                if email[0] not in ('@','.') and email[-1] not in ('@','.') and '@' in email and '.' in email and email[email.index('@')+1] != '.' and len(dob)==10:
+                    cur.execute('insert into user_dets values("{}","{}","{}","{}");'.format(username, pwd, email, dob))
+                    con.commit()
+                    showError('Registered!', 350)
+                    return True
+                else:
+                    showError('Enter vaild email/enter date of birth in the format: YYYY-MM-DD', 75)
+                    return False
+        except mysql.connector.Error:
+            showError('Database Issue; Please Try Later')
+            return False
+        finally:
+            con.close()
+    else:
+        showError('Error Connecting to Database; Please Try Later', 100)
+    return False
 
 def main():
     clock = pg.time.Clock()
@@ -73,24 +129,31 @@ def main():
         for box in input_boxes:
             box.update()
 
-        screen.fill((30, 30, 30))
+        screen.fill((174, 214, 220))
         for box in input_boxes:
             box.draw(screen)
 
-        screen.blit(FONT.render('Sign up now!', True,(0,0,0)),(370,50))
-        screen.blit(FONT.render('Username',True,(0,0,0)),(220,150))
-        screen.blit(FONT.render('Password', True, (0, 0, 0)),(220,250))
-        screen.blit(FONT.render('Email', True,(0,0,0)),(220,350))
-        screen.blit(FONT.render("Date of birth",True,(0,0,0)),(220,450))
-        pg.draw.rect(screen,(255,100,100),(390,550,100,32))
-        textsurface=font.render('Register',True,(0,0,0))
-        textsurf,textrect=textsurface,textsurface.get_rect()
-        textrect.center=(440,566)
-        screen.blit(textsurf,textrect)
-    
+        screen.blit(font.render('Sign up now!', True,(0,0,0)),(370,50))
+        screen.blit(FONT.render('Username',True,(0,0,0)),(210,155))
+        screen.blit(FONT.render('Password', True, (0,0,0)),(210,255))
+        screen.blit(FONT.render('Email', True,(0,0,0)),(210,355))
+        screen.blit(FONT.render('Date of birth',True,(0,0,0)),(210,455))
+        
+        mouse=pg.mouse.get_pos()
+        click=pg.mouse.get_pressed()
+        button('Register',390,550,100,32)
+        if 490>mouse[0]>390 and 582>mouse[1]>550 and click[0]==1:
+            username, pwd, email, dob = input_boxes[0].text, input_boxes[1].text, input_boxes[2].text, input_boxes[3].text
+            if username and pwd and email and dob and validateUsername(username, pwd, email, dob):
+                done = True
+                homepage.main()
+            elif not username or not pwd or not dob or not email:
+                showError('Please fill all fields', 300)
             
-
-        pg.display.flip()
+        try:
+            pg.display.update()
+        except:
+            pass
         clock.tick(30)
 
 

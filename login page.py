@@ -8,12 +8,11 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 pg.init()
 screen = pg.display.set_mode((800, 640), pg.RESIZABLE)
-COLOR_INACTIVE = pg.Color('lightskyblue3')
-COLOR_ACTIVE = pg.Color('dodgerblue2')
-FONT = pg.font.Font(None, 32)
-font=pg.font.Font(None, 20)
-red=(255,0,0)
-shadow=(192,192,192)
+COLOR_INACTIVE = pg.Color(226,226,226)
+COLOR_ACTIVE = pg.Color(74,83,107)
+BFONT = pg.font.SysFont('Corbel', 15, bold=True)
+font=pg.font.SysFont('Corbel', 32, bold=True)
+FONT = pg.font.SysFont('Corbel', 25, bold=True)
 
 class InputBox:
 
@@ -50,12 +49,12 @@ class InputBox:
         pg.draw.rect(screen, self.color, self.rect, 2)
 
 def textobjects(text,font):
-    textsurface=font.render(text,True,(0,0,0))
+    textsurface=BFONT.render(text,True,(0,0,0))
     return textsurface,textsurface.get_rect()
 
 def button(msg,x,y,w,h):
     
-    pg.draw.rect(screen,(255,100,100),(x,y,w,h))
+    pg.draw.rect(screen,(255,154,141),(x,y,w,h))
     textsurf,textrect=textobjects(msg,font)
     textrect.center=((x+(w//2)),(y+(h//2)))
     screen.blit(textsurf,textrect)
@@ -63,11 +62,11 @@ def button(msg,x,y,w,h):
 def showError(message):
     start_time = time.time()
     levelfont = pg.font.SysFont('Corbel', 25)
-    text = levelfont.render(message, True, (0, 0, 0))
+    text = levelfont.render(message, True, (255, 0, 0))
     show = True
     while show:
         if time.time() - start_time < 3:
-            screen.blit(text, (200, 200))
+            screen.blit(text, (200, 600))
         else:
             show = False
         pg.display.update()
@@ -90,11 +89,12 @@ def validatePwd(username, pwd):
                 return False
         except mysql.connector.Error:
             showError('Database Issue; Please Try Later')
+            return False
         finally:
             con.close()
     else:
         showError('Error Connecting to Database; Please Try Later')
-    return False
+        return False
 
 def main():
     clock = pg.time.Clock()
@@ -113,7 +113,7 @@ def main():
         for box in input_boxes:
             box.update()
 
-        screen.fill(shadow)
+        screen.fill((174,214,220))
         for box in input_boxes:
             box.draw(screen)
 
@@ -131,11 +131,12 @@ def main():
         if 670>mouse[0]>520 and 572>mouse[1]>540 and click[0]==1:
             print('3')
         
-        screen.blit(FONT.render('<nameofgame>', True,(0,0,0)),(300,50))
-        screen.blit(FONT.render('<tagline>',True,(0,0,0)),(420,150))
+        screen.blit(font.render('<nameofgame>', True,(0,0,0)),(300,50))
+        playerImg = pg.image.load('vampire.png')
+        screen.blit(playerImg, (375, 100))
         screen.blit(FONT.render('Username', True, (0, 0, 0)),(220,250))
         screen.blit(FONT.render('Password', True,(0,0,0)),(220,350))
-        screen.blit(font.render("Don't have an account? ",True,(0,0,0)),(120,550))
+        screen.blit(BFONT.render("Don't have an account? ",True,(0,0,0)),(115,550))
 
         pg.display.flip()
         clock.tick(30)
