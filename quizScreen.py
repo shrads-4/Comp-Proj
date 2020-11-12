@@ -10,18 +10,20 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 pygame.init()
 
-def quiz(event, screen, que="<question>", options=["option1", "option2", "option3", "option4"]):
+def quiz(event, screen, que="<question>", options=["option1", "option2", "option3", "option4"], length = 200):
     
-    Qfont = pygame.font.SysFont('Corbel', 30)
-    text = Qfont.render(que, True, (0, 0, 0))
-    screen.blit(text, (25,30))
+    Q = splitQ(que)
+    Qfont = pygame.font.SysFont('Corbel', 30, bold = True)
+    for i in range(len(Q)):
+        text = Qfont.render(Q[i], True, (0, 0, 0))
+        screen.blit(text, (25,20+30*i))
     
     font = pygame.font.SysFont('Corbel', 20, bold = True)
 
-    answer1 = pygbutton.PygButton((100, 260, 200, 30), options[0], font = font, bgcolor = (174,214,220))
-    answer2 = pygbutton.PygButton((100, 300, 200, 30), options[1], font = font, bgcolor = (174,214,220))
-    answer3 = pygbutton.PygButton((100, 340, 200, 30), options[2], font = font, bgcolor = (174,214,220))
-    answer4 = pygbutton.PygButton((100, 380, 200, 30), options[3], font = font, bgcolor = (174,214,220))
+    answer1 = pygbutton.PygButton((100, 260, length, 30), options[0], font = font, bgcolor = (174,214,220))
+    answer2 = pygbutton.PygButton((100, 300, length, 30), options[1], font = font, bgcolor = (174,214,220))
+    answer3 = pygbutton.PygButton((100, 340, length, 30), options[2], font = font, bgcolor = (174,214,220))
+    answer4 = pygbutton.PygButton((100, 380, length, 30), options[3], font = font, bgcolor = (174,214,220))
     
     answer1.draw(screen)
     answer2.draw(screen)
@@ -44,9 +46,9 @@ def quiz(event, screen, que="<question>", options=["option1", "option2", "option
 
 def queType(event, screen, T):
 
-    type1 = pygbutton.PygButton((250, 200, 200, 30), T[0])
-    type2 = pygbutton.PygButton((250, 300, 200, 30), T[1])
-    type3 = pygbutton.PygButton((250, 400, 200, 30), T[2])
+    type1 = pygbutton.PygButton((300, 200, 200, 30), T[0], bgcolor=(255,154,141))
+    type2 = pygbutton.PygButton((300, 300, 200, 30), T[1], bgcolor=(255,154,141))
+    type3 = pygbutton.PygButton((300, 400, 200, 30), T[2], bgcolor=(255,154,141))
 
     type1.draw(screen)
     type2.draw(screen)
@@ -82,7 +84,13 @@ def dbQueData(screen, questionType):
             options = list(cur.fetchone())[1:]
             answer = options[0]
             random.shuffle(options)
-            if questionType in ('food','tourism'):
+            for option in options:
+                if len(option)>=25:
+                    length = 450
+                    break
+                else:
+                    length = 300
+            if questionType in ('food','tourism','wildlife'):
                 cur.execute('select link from {} where q_no = {};'.format(questionType, q_no))
                 link = cur.fetchone()[0]
                 if link:
@@ -95,15 +103,25 @@ def dbQueData(screen, questionType):
                 bg = pygame.image.load("QImages\\background.png")
                 screen.blit(bg,(0,0))
         except mysql.connector.Error:
-            error_image = pygame.image.load('traffic-sign.png')
+            error_image = pygame.image.load('error.png')
             screen.blit(error_image, (350,300))
         finally:
             con.close()
     else:
-        error_image = pygame.image.load('traffic-sign.png')
+        error_image = pygame.image.load('error.png')
         screen.blit(error_image, (350,300))
     
-    return question, options, answer
+    return question, options, answer, length
+
+def splitQ(que):
+    L = que.split()
+    chunks = [L[i:i+8] for i in range(0, len(L), 8)]
+    que = [None]*len(chunks)
+    i=0
+    for l in chunks:
+        que[i] = ' '.join(l)
+        i+=1
+    return que
 
 def main():
     screen = pygame.display.set_mode((800, 640), pygame.RESIZABLE)
@@ -121,7 +139,7 @@ def main():
             questionType = queType(event, screen, T)
             running = False
         if questionType:
-            question, options, answer = dbQueData(screen, questionType)
+            question, options, answer, length = dbQueData(screen, questionType)
             queTypeVariable = False
         pygame.display.update()
     else:
@@ -133,7 +151,7 @@ def main():
                 running = False
                 pygame.quit()
 
-            Q = quiz(event, screen, question, options)
+            Q = quiz(event, screen, question, options, length = length)
             if answer == Q:
                 return True
             elif Q:

@@ -26,3 +26,12 @@ update tourism set link = "QImages\\tourism27.png" where q_no = 27;
 update tourism set link = "QImages\\tourism29.png" where q_no = 29;
 update tourism set link = "QImages\\tourism30.png" where q_no = 30;
 update tourism set link = "QImages\\tourism31.png" where q_no = 31;
+
+update wildlife set link = "QImages\\wildlife4.png" where q_no = 4;
+update wildlife set link = "QImages\\wildlife8.png" where q_no = 8;
+update wildlife set link = "QImages\\wildlife11.png" where q_no = 11;
+update wildlife set link = "QImages\\wildlife15.png" where q_no = 15;
+update wildlife set link = "QImages\\wildlife17.png" where q_no = 17;
+update wildlife set link = "QImages\\wildlife23.png" where q_no = 23;
+update wildlife set link = "QImages\\wildlife28.png" where q_no = 28;
+update wildlife set link = "QImages\\wildlife29.png" where q_no = 29;

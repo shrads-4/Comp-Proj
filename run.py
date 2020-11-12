@@ -149,7 +149,7 @@ def run():
     c = 0
     running = True
     quiz = False
-    levelChange = 200
+    levelChange = 500
 
     while not done:
 
