@@ -80,21 +80,19 @@ def validatePwd(username, pwd):
             result = cur.fetchone()
             if result:
                 if pwd == result[0]:
+                    con.close()
                     return True
                 else:
                     showError('Incorrect Password. Try Again.')
-                    return False
             else:
                 showError('Incorrect Username. Try Again.')
-                return False
         except mysql.connector.Error:
             showError('Database Issue; Please Try Later')
-            return False
         finally:
             con.close()
     else:
         showError('Error Connecting to Database; Please Try Later')
-        return False
+    return False
 
 def main():
     clock = pg.time.Clock()
@@ -123,7 +121,7 @@ def main():
         if 490>mouse[0]>390 and 482>mouse[1]>450 and click[0]==1:
             username, pwd = input_boxes[0].text, input_boxes[1].text
             if username and pwd and validatePwd(username, pwd):
-                homepage.main()
+                homepage.main(username)
         button('Sign up!',270,540,100,32)
         if 370>mouse[0]>270 and 572>mouse[1]>540 and click[0]==1:
             import signup
