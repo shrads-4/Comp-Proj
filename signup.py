@@ -94,7 +94,7 @@ def validateUsername(username, pwd, email, dob):
                 return False
             else:
                 if email[0] not in ('@','.') and email[-1] not in ('@','.') and '@' in email and '.' in email and email[email.index('@')+1] != '.' and len(dob)==10:
-                    cur.execute('insert into user_dets values("{}","{}","{}","{}");'.format(username, pwd, email, dob))
+                    cur.execute('insert into user_dets values("{}","{}","{}","{}",0);'.format(username, pwd, email, dob))
                     con.commit()
                     showError('Registered!', 350)
                     return True
@@ -146,7 +146,7 @@ def main():
             username, pwd, email, dob = input_boxes[0].text, input_boxes[1].text, input_boxes[2].text, input_boxes[3].text
             if username and pwd and email and dob and validateUsername(username, pwd, email, dob):
                 done = True
-                homepage.main()
+                homepage.main(username)
             elif not username or not pwd or not dob or not email:
                 showError('Please fill all fields', 300)
             
