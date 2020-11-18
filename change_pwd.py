@@ -72,12 +72,14 @@ def showError(message):
             show = False
         pg.display.update()
 
-def validatePwd(username,new_pwd,confirm_pwd):
+def validatePwd(username,current_pwd,new_pwd,confirm_pwd):
     con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha4', database = 'comp_proj')
     if con.is_connected():
         try:
             cur = con.cursor(buffered=True)
-            if new_pwd==confirm_pwd:
+            cur.execute('select pwd from user_dets where username = "{}"'.format(username))
+            result=cur.fetchone()
+            if new_pwd==confirm_pwd and current_pwd==result[0]:
                cur.execute('update user_dets set pwd="{}" where username="{}"'.format(new_pwd,username))
                con.commit()
                return True
@@ -97,7 +99,8 @@ def main(username):
     clock = pg.time.Clock()
     input_box1 = InputBox(350, 250, 140, 32)
     input_box2 = InputBox(350, 350, 140, 32)
-    input_boxes = [input_box1, input_box2]
+    input_box3 = InputBox(350, 450, 140, 32)
+    input_boxes = [input_box1, input_box2, input_box3]
     done = False
 
     while not done:
@@ -115,10 +118,11 @@ def main(username):
         screen.blit(font.render('<nameofgame>', True,(0,0,0)),(300,50))
         playerImg = pg.image.load('vampire.png')
         screen.blit(playerImg, (375, 100))
-        screen.blit(FONT.render('New password', True, (0, 0, 0)),(150,250))
-        screen.blit(FONT.render('Confirm password', True,(0,0,0)),(150,350))
+        screen.blit(FONT.render('Current password', True, (0, 0, 0)),(150,250))
+        screen.blit(FONT.render('New password', True, (0, 0, 0)),(150,350))
+        screen.blit(FONT.render('Confirm password', True,(0,0,0)),(150,450))
         
-        button('Change password',320,450,150,32)
+        button('Change password',320,500,150,32)
         button('Back',320,550,150,32)
 
         for event in pg.event.get():
@@ -128,9 +132,9 @@ def main(username):
             for box in input_boxes:
                 box.handle_event(event) 
 
-        if 470>mouse[0]>320 and 482>mouse[1]>450 and click[0]==1 and not done:
-            new_pwd,confirm_pwd = input_boxes[0].text, input_boxes[1].text
-            if new_pwd and confirm_pwd and validatePwd(username,new_pwd,confirm_pwd):
+        if 470>mouse[0]>320 and 532>mouse[1]>500 and click[0]==1 and not done:
+            current_pwd,new_pwd,confirm_pwd = input_boxes[0].text, input_boxes[1].text, input_boxes[2].text
+            if new_pwd and confirm_pwd and current_pwd and validatePwd(username,current_pwd,new_pwd,confirm_pwd):
                 showError('Password changed successfully')
                 done = True
                 user_details.main(username,'sampleEmail@yahoo.com')
