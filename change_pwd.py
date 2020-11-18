@@ -3,6 +3,7 @@ import os
 import homepage
 import time
 import mysql.connector
+import user_details
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -65,7 +66,7 @@ def showError(message):
     text = levelfont.render(message, True, (255, 0, 0))
     show = True
     while show:
-        if time.time() - start_time < 3:
+        if time.time() - start_time < 2:
             screen.blit(text, (200, 600))
         else:
             show = False
@@ -75,10 +76,10 @@ def validatePwd(username,new_pwd,confirm_pwd):
     con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha4', database = 'comp_proj')
     if con.is_connected():
         try:
-            cur = con.cursor()
-            cur.execute('select pwd from user_dets where username = "{}"'.format(username))
+            cur = con.cursor(buffered=True)
             if new_pwd==confirm_pwd:
                cur.execute('update user_dets set pwd="{}" where username="{}"'.format(new_pwd,username))
+               con.commit()
                return True
             else:
                 showError('Password does not match. Try Again.')
@@ -92,7 +93,7 @@ def validatePwd(username,new_pwd,confirm_pwd):
         showError('Error Connecting to Database; Please Try Later')
         return False
 
-def main():
+def main(username):
     clock = pg.time.Clock()
     input_box1 = InputBox(350, 250, 140, 32)
     input_box2 = InputBox(350, 350, 140, 32)
@@ -100,41 +101,51 @@ def main():
     done = False
 
     while not done:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                done = True
-            for box in input_boxes:
-                box.handle_event(event)
-
         for box in input_boxes:
             box.update()
 
         screen.fill((174,214,220))
+
         for box in input_boxes:
             box.draw(screen)
 
         mouse=pg.mouse.get_pos()
         click=pg.mouse.get_pressed()
-        
-        button('Change password',320,450,150,32)
-        if 470>mouse[0]>320 and 482>mouse[1]>450 and click[0]==1:
-            new_pwd,confirm_pwd = input_boxes[0].text, input_boxes[1].text
-            if new_pwd and confirm_pwd and validatePwd(username,new_pwd,confirm_pwd):
-                showError('Password changed successfully')
-                import user_details
-        button('Back',320,550,150,32)
-        if 470>mouse[0]>320 and 582>mouse[1]>550 and click[0]==1:
-            import user_details
+
         screen.blit(font.render('<nameofgame>', True,(0,0,0)),(300,50))
         playerImg = pg.image.load('vampire.png')
         screen.blit(playerImg, (375, 100))
         screen.blit(FONT.render('New password', True, (0, 0, 0)),(150,250))
         screen.blit(FONT.render('Confirm password', True,(0,0,0)),(150,350))
         
+        button('Change password',320,450,150,32)
+        button('Back',320,550,150,32)
 
-        pg.display.flip()
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                done = True
+                pg.quit()
+            for box in input_boxes:
+                box.handle_event(event) 
+
+        if 470>mouse[0]>320 and 482>mouse[1]>450 and click[0]==1 and not done:
+            new_pwd,confirm_pwd = input_boxes[0].text, input_boxes[1].text
+            if new_pwd and confirm_pwd and validatePwd(username,new_pwd,confirm_pwd):
+                showError('Password changed successfully')
+                done = True
+                user_details.main(username,'sampleEmail@yahoo.com')
+        
+        if 470>mouse[0]>320 and 582>mouse[1]>550 and click[0]==1 and not done:
+            done = True
+            user_details.main(username,'sampleEmail@yahoo.com')      
+
+        try:
+            pg.display.update()
+        except:
+            pass
         clock.tick(30)
         
 
-main()
-pg.quit()
+if __name__ == "__main__":
+    main('User1')
+    pg.quit()

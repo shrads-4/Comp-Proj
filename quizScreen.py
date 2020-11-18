@@ -136,28 +136,36 @@ def main():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 running = False
                 pygame.quit()
+                return
             questionType = queType(event, screen, T)
             running = False
         if questionType:
             question, options, answer, length = dbQueData(screen, questionType)
             queTypeVariable = False
-        pygame.display.update()
+        
+        try:
+            pygame.display.update()
+        except:
+            pass
     else:
         running = True
 
     while running:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-                running = False
-                pygame.quit()
-
             Q = quiz(event, screen, question, options, length = length)
             if answer == Q:
                 return True
             elif Q:
                 return False
+            
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+                running = False
+                pygame.quit()
 
-        pygame.display.update()
+        try:
+            pygame.display.update()
+        except:
+            pass
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ import os
 import homepage
 import time
 import mysql.connector
+import signup
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -65,7 +66,7 @@ def showError(message):
     text = levelfont.render(message, True, (255, 0, 0))
     show = True
     while show:
-        if time.time() - start_time < 3:
+        if time.time() - start_time < 2:
             screen.blit(text, (200, 600))
         else:
             show = False
@@ -102,33 +103,14 @@ def main():
     done = False
 
     while not done:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                done = True
-            for box in input_boxes:
-                box.handle_event(event)
-
         for box in input_boxes:
             box.update()
 
         screen.fill((174,214,220))
+        
         for box in input_boxes:
             box.draw(screen)
 
-        mouse=pg.mouse.get_pos()
-        click=pg.mouse.get_pressed()
-        button('Login',390,450,100,32)
-        if 490>mouse[0]>390 and 482>mouse[1]>450 and click[0]==1:
-            username, pwd = input_boxes[0].text, input_boxes[1].text
-            if username and pwd and validatePwd(username, pwd):
-                homepage.main(username)
-        button('Sign up!',270,540,100,32)
-        if 370>mouse[0]>270 and 572>mouse[1]>540 and click[0]==1:
-            import signup
-        button('Forgot password?',520,540,150,32)
-        if 670>mouse[0]>520 and 572>mouse[1]>540 and click[0]==1:
-            print('3')
-        
         screen.blit(font.render('<nameofgame>', True,(0,0,0)),(300,50))
         playerImg = pg.image.load('vampire.png')
         screen.blit(playerImg, (375, 100))
@@ -136,7 +118,37 @@ def main():
         screen.blit(FONT.render('Password', True,(0,0,0)),(220,350))
         screen.blit(BFONT.render("Don't have an account? ",True,(0,0,0)),(115,550))
 
-        pg.display.flip()
+        mouse=pg.mouse.get_pos()
+        click=pg.mouse.get_pressed()
+
+        button('Login',390,450,100,32)
+        button('Sign up!',270,540,100,32)
+        button('Forgot password?',520,540,150,32)
+
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                done = True
+                pg.quit()
+            for box in input_boxes:
+                box.handle_event(event)
+
+        if 490>mouse[0]>390 and 482>mouse[1]>450 and click[0]==1 and not done:
+            username, pwd = input_boxes[0].text, input_boxes[1].text
+            if username and pwd and validatePwd(username, pwd):
+                done = True
+                homepage.main(username)
+        
+        if 370>mouse[0]>270 and 572>mouse[1]>540 and click[0]==1 and not done:
+            done = True
+            signup.main()
+        
+        if 670>mouse[0]>520 and 572>mouse[1]>540 and click[0]==1 and not done:
+            print('3')
+
+        try:
+            pg.display.update()
+        except:
+            pass
         clock.tick(30)
         
 if __name__ == '__main__':

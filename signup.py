@@ -73,7 +73,7 @@ def showError(message, x = 200, y = 600):
     text = levelfont.render(message, True, (255,0,0))
     show = True
     while show:
-        if time.time() - start_time < 3:
+        if time.time() - start_time < 2:
             screen.blit(text, (x, y))
         else:
             show = False
@@ -88,7 +88,6 @@ def validateUsername(username, pwd, email, dob):
             result = []
             for uName in cur.fetchall():
                 result+=uName
-            print(result)
             if username in result:
                 showError('This username is taken. Enter a different one.', 150)
                 return False
@@ -120,12 +119,6 @@ def main():
     done = False
 
     while not done:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                done = True
-            for box in input_boxes:
-                box.handle_event(event)
-
         for box in input_boxes:
             box.update()
 
@@ -142,7 +135,15 @@ def main():
         mouse=pg.mouse.get_pos()
         click=pg.mouse.get_pressed()
         button('Register',390,550,100,32)
-        if 490>mouse[0]>390 and 582>mouse[1]>550 and click[0]==1:
+
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                done = True
+                pg.quit()
+            for box in input_boxes:
+                box.handle_event(event)
+
+        if 490>mouse[0]>390 and 582>mouse[1]>550 and click[0]==1 and not done:
             username, pwd, email, dob = input_boxes[0].text, input_boxes[1].text, input_boxes[2].text, input_boxes[3].text
             if username and pwd and email and dob and validateUsername(username, pwd, email, dob):
                 done = True
@@ -156,6 +157,6 @@ def main():
             pass
         clock.tick(30)
 
-
-main()
-pg.quit()
+if __name__ == "__main__":
+    main()
+    pg.quit()

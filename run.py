@@ -198,6 +198,9 @@ def run():
             if c % levelChange == 0 and over:
                 running = False
                 quiz = True
+            
+            obstacle(imgD, X, Y, noOfObstacles, runScreen)
+            player(playerX, playerY, runScreen, playerImg)
 
             # keyboard input
             for event in pygame.event.get():
@@ -206,6 +209,7 @@ def run():
                     done = True
                     running = False
                     quiz = False
+                    return c
                 # action on pressing arrow keys
                 if event.type == pygame.KEYDOWN:
                     if over:
@@ -215,10 +219,10 @@ def run():
                         elif event.key == pygame.K_LEFT:
                             if XList.index(playerX) != 0:
                                 playerX = XList[XList.index(playerX)-1]
-
-            obstacle(imgD, X, Y, noOfObstacles, runScreen)
-            player(playerX, playerY, runScreen, playerImg)
-            pygame.display.update()
+            try:
+                pygame.display.update()
+            except:
+                pass
 
         if quiz:
             noOfObstacles = 4
@@ -243,7 +247,18 @@ def run():
 
             obstacle(imgD, X, Y, noOfObstacles, runScreen)
             player(playerX, playerY, runScreen, playerImg)
-            pygame.display.update()
+
+            for event in pygame.event.get():
+                # action on clicking the x
+                if event.type == pygame.QUIT:
+                    done = True
+                    running = False
+                    quiz = False
+                    return c
+            try:
+                pygame.display.update()
+            except:
+                pass
 
     return score
 
