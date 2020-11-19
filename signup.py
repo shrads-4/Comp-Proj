@@ -131,6 +131,7 @@ def main():
         screen.blit(FONT.render('Password', True, (0,0,0)),(210,255))
         screen.blit(FONT.render('Email', True,(0,0,0)),(210,355))
         screen.blit(FONT.render('Date of birth',True,(0,0,0)),(210,455))
+        screen.blit(FONT.render('(YYYY-MM-DD)', True, (0,0,0)),(555,455))
         
         mouse=pg.mouse.get_pos()
         click=pg.mouse.get_pressed()
