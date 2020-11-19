@@ -134,7 +134,7 @@ def main(username):
 
         if 470>mouse[0]>320 and 532>mouse[1]>500 and click[0]==1 and not done:
             current_pwd,new_pwd,confirm_pwd = input_boxes[0].text, input_boxes[1].text, input_boxes[2].text
-            if new_pwd and confirm_pwd and current_pwd and validatePwd(username,current_pwd,new_pwd,confirm_pwd):
+            if new_pwd and confirm_pwd and current_pwd and validatePwd(username,current_pwd,new_pwd,confirm_pwd) and not done:
                 showError('Password changed successfully')
                 done = True
                 user_details.main(username,'sampleEmail@yahoo.com')

@@ -28,10 +28,10 @@ def main(username):
         textsurface = FONT.render(text, True, (0, 0, 0))
         return textsurface, textsurface.get_rect()
 
-    def showError(message, x=200, y=600, size=25):
+    def showError(message, x=200, y=600, size=25, color = (255,0,0)):
         start_time = time.time()
         levelfont = pg.font.SysFont('Corbel', size)
-        text = levelfont.render(message, True, (255, 0, 0))
+        text = levelfont.render(message, True, color)
         show = True
         while show:
             if time.time() - start_time < 2:
@@ -48,8 +48,9 @@ def main(username):
                 cur = con.cursor()
                 cur.execute(
                     'select high_score from user_dets where username = "{}"'.format(username))
-                high_score = cur.fetchone()
-                print(high_score[0])
+                high_score = cur.fetchone()[0]
+                screen.fill((174,214,220))
+                showError('High Score: '+str(high_score), x=300, y=300, color = (0,0,0), size=35)
             except mysql.connector.Error:
                 showError('Database Issue; Please Try Later')
             finally:
@@ -120,6 +121,8 @@ def main(username):
         pos = pg.mouse.get_pos()
         click = pg.mouse.get_pressed()
         button('Start running', 300, 250, 200, 42)
+        button('High score', 300, 350, 200, 42)
+        button('User details', 300, 450, 200, 42)
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -133,10 +136,10 @@ def main(username):
                     showError('New High Score!:'+str(score), x=200, y=100, size=35)
                 except:
                     pass
-        button('High score', 300, 350, 200, 42)
+        
         if 500 > pos[0] > 300 and 392 > pos[1] > 350 and click[0] == 1 and not done:
             showScore(username)
-        button('User details', 300, 450, 200, 42)
+        
         if 500 > pos[0] > 300 and 492 > pos[1] > 450 and click[0] == 1 and not done:
             screen.fill((174, 214, 220))
             done = True
