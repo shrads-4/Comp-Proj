@@ -4,6 +4,7 @@ import homepage
 import time
 import mysql.connector
 import user_details
+import loginpage
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -72,20 +73,19 @@ def showError(message):
             show = False
         pg.display.update()
 
-def validateUser(usernam,email,dob,newpwd):
-    con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha', database = 'comp_proj')
+def validateUser(username,email,dob,newpwd):
+    con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha4', database = 'comp_proj')
     if con.is_connected():
         try:
             cur = con.cursor(buffered=True)
-            cur.execute('select username,email,dob from user_dets where username = "{}"'.format(username))
+            cur.execute('select email from user_dets where username = "{}" and dob = "{}"'.format(username,dob))
             result=cur.fetchone()
-            if username==result[0] and email==result[1] and dob==result[2]:
-               cur.execute('update user_dets set pwd="{}" where username="{}"'.format(new_pwd,username)) 
+            if email==result[0] and result:
+               cur.execute('update user_dets set pwd="{}" where username="{}"'.format(newpwd,username)) 
                con.commit()
-               print("Password successfully changed")
                return True
             else:
-                showError('Username does not match. Try Again.')
+                showError('User information does not match. Try Again.')
                 return False
         except mysql.connector.Error:
             showError('Database Issue; Please Try Later')
@@ -96,7 +96,7 @@ def validateUser(usernam,email,dob,newpwd):
         showError('Error Connecting to Database; Please Try Later')
         return False
 
-def main(username):
+def main():
     clock = pg.time.Clock()
     input_box1 = InputBox(470, 200, 140, 32)
     input_box2 = InputBox(470, 300, 140, 32)
@@ -120,9 +120,9 @@ def main(username):
         screen.blit(font.render('<nameofgame>', True,(0,0,0)),(300,50))
         playerImg = pg.image.load('vampire.png')
         screen.blit(playerImg, (375, 100))
-        screen.blit(FONT.render("Username(to confirm it's you)", True, (0, 0, 0)),(100,200))
+        screen.blit(FONT.render("Username", True, (0, 0, 0)),(100,200))
         screen.blit(FONT.render('Email', True, (0, 0, 0)),(100,300))
-        screen.blit(FONT.render('DOB', True,(0,0,0)),(100,400))
+        screen.blit(FONT.render('Date Of Birth', True,(0,0,0)),(100,400))
         screen.blit(FONT.render('New password', True,(0,0,0)),(100,500))
         
         button('Set password',500,580,150,32)
@@ -135,15 +135,17 @@ def main(username):
             for box in input_boxes:
                 box.handle_event(event) 
 
-        if 470>mouse[0]>320 and 532>mouse[1]>500 and click[0]==1 and not done:
+        if 650>mouse[0]>500 and 612>mouse[1]>580 and click[0]==1 and not done:
             Username,Email,DOB,new_pwd = input_boxes[0].text, input_boxes[1].text, input_boxes[2].text, input_boxes[3].text
-            if Username and Email and DOB and validateUser(Username,Email,DOB,new_pwd) and not done:
+            if Username and Email and DOB and new_pwd and validateUser(Username,Email,DOB,new_pwd) and not done:
                 done = True
-                user_details.main(username,'sampleEmail@yahoo.com')
+                showError('Password has been reset')
+                user_details.main(Username,Email)
+                
         
-        if 470>mouse[0]>320 and 582>mouse[1]>550 and click[0]==1 and not done:
+        if 450>mouse[0]>300 and 612>mouse[1]>580 and click[0]==1 and not done:
             done = True
-            user_details.main(username,'sampleEmail@yahoo.com')      
+            loginpage.main()
 
         try:
             pg.display.update()
@@ -153,5 +155,5 @@ def main(username):
         
 
 if __name__ == "__main__":
-    main('User1')
+    main()
     pg.quit()

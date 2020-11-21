@@ -4,6 +4,7 @@ import homepage
 import time
 import mysql.connector
 import signup
+import forgotpswd
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -143,7 +144,8 @@ def main():
             signup.main()
         
         if 670>mouse[0]>520 and 572>mouse[1]>540 and click[0]==1 and not done:
-            print('3')
+            done = True
+            forgotpswd.main()
 
         try:
             pg.display.update()
