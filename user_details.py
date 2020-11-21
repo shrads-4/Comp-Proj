@@ -34,14 +34,19 @@ def main(username,email):
                 show = False
             pg.display.update()
     
-    def deleteAccount(username):
+    def deleteAccount(username, password):
         con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha4', database = 'comp_proj')
         if con.is_connected():
             try:
                 cur = con.cursor(buffered=True)
-                cur.execute('delete from user_dets where username="{}"'.format(username))
-                con.commit()
-                return True
+                cur.execute('select pwd from user_dets where username="{}"'.format(username))
+                pwd = cur.fetchone()[0]
+                if pwd == password:
+                    cur.execute('delete from user_dets where username="{}"'.format(username))
+                    con.commit()
+                    return True
+                else:
+                    showError('Incorrect password',x=300)
             except mysql.connector.Error:
                 showError('Database Issue; Please Try Later')
                 return False
@@ -50,6 +55,35 @@ def main(username,email):
         else:
             showError('Error Connecting to Database; Please Try Later')
             return False
+
+    def delAcc(username):
+        inputbox = change_pwd.InputBox(375,250,200,40)
+        over = False
+        while not over:
+            inputbox.update()
+            screen.fill((174,214,220))
+            inputbox.draw(screen)
+            mouse=pg.mouse.get_pos()
+            click=pg.mouse.get_pressed()
+            screen.blit(font.render('Enter Password', True,(0,0,0)),(150,260))
+            button('Submit',320,350,150,32)
+            if 470>mouse[0]>320 and 382>mouse[1]>350 and click[0]==1 and not over:
+                over = True
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    over = True
+                    return 'QUIT'
+                inputbox.handle_event(event)
+            try:
+                pg.display.update()
+            except:
+                pass
+        password = inputbox.text
+        if deleteAccount(username, password):
+            showError('Account deleted', 300)
+            return 'signup'
+        else:
+            return 'homepage'
 
     screen = pg.display.set_mode((800, 640), pg.RESIZABLE)
     font=pg.font.SysFont('Corbel', 32, bold=True)
@@ -87,13 +121,16 @@ def main(username,email):
             done = True
             change_pwd.main(username)            
         
-        if 720>mouse[0]>520 and 292>mouse[1]>250 and click[0]==1 and not done:
-            if deleteAccount(username):
-                showError('Account deleted', 550)
-                done = True
+        if 720>mouse[0]>520 and 292>mouse[1]>250 and click[0]==1 and not done:  
+            done = True    
+            result = delAcc(username)      
+            if result=='QUIT':
+                pg.quit()
+            elif result=='signup':
                 signup.main()
             else:
-                homepage.main(username)      
+                homepage.main(username)
+
         
         if 520>mouse[0]>320 and 492>mouse[1]>450 and click[0]==1 and not done:
             done = True
@@ -110,7 +147,7 @@ def main(username,email):
         clock.tick(30)
 
 if __name__ == "__main__":
-    username='User1'
-    email='y'
-    main(username,email,screen)
+    username='shrads'
+    email='shradp12@gmail.com'
+    main(username,email)
     pg.quit()
