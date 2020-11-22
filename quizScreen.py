@@ -66,7 +66,7 @@ def queType(event, screen, T):
         return T[2]
 
 def TypeList():
-    typeList = ['food', 'tourism', 'history', 'geography', 'music', 'wildlife', 'sports', 'famous']
+    typeList = ['Food', 'Tourism', 'History', 'Geography', 'Music', 'Wildlife', 'Sports', 'Famous']
     random.shuffle(typeList)
     return typeList[:3]
 
