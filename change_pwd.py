@@ -79,7 +79,7 @@ def validatePwd(username,current_pwd,new_pwd,confirm_pwd):
             cur = con.cursor(buffered=True)
             cur.execute('select pwd from user_dets where username = "{}"'.format(username))
             result=cur.fetchone()
-            if new_pwd==confirm_pwd and current_pwd==result[0]:
+            if new_pwd==confirm_pwd and current_pwd==result[0] and result:
                cur.execute('update user_dets set pwd="{}" where username="{}"'.format(new_pwd,username))
                con.commit()
                return True

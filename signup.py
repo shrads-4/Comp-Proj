@@ -92,7 +92,7 @@ def validateUsername(username, pwd, email, dob):
                 showError('This username is taken. Enter a different one.', 150)
                 return False
             else:
-                if email[0] not in ('@','.') and email[-1] not in ('@','.') and '@' in email and '.' in email and email[email.index('@')+1] != '.' and len(dob)==10:
+                if email[0] not in ('@','.') and email[-1] not in ('@','.') and '@' in email and '.' in email and email[email.index('@')+1] != '.' and len(dob)==10 and '/' not in dob:
                     cur.execute('insert into user_dets values("{}","{}","{}","{}",0);'.format(username, pwd, email, dob))
                     con.commit()
                     showError('Registered!', 350)
