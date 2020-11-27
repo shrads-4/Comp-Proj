@@ -46,8 +46,11 @@ class InputBox:
         width = max(200, self.txt_surface.get_width()+10)
         self.rect.w = width
 
-    def draw(self, screen):
-        screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
+    def draw(self, screen, user):
+        if user:
+            screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
+        else:
+            screen.blit(FONT.render("*"*len(self.text),True, COLOR_ACTIVE), (self.rect.x+5, self.rect.y+5))
         pg.draw.rect(screen, self.color, self.rect, 2)
 
 def textobjects(text,font):
@@ -109,8 +112,8 @@ def main():
 
         screen.fill((174,214,220))
         
-        for box in input_boxes:
-            box.draw(screen)
+        input_box1.draw(screen, True)
+        input_box2.draw(screen, False)
 
         screen.blit(font.render('<nameofgame>', True,(0,0,0)),(300,50))
         playerImg = pg.image.load('vampire.png')

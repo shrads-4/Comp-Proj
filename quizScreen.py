@@ -90,7 +90,7 @@ def dbQueData(screen, questionType):
                     break
                 else:
                     length = 300
-            if questionType in ('food','tourism','wildlife'):
+            if questionType in ('Food','Tourism','Wildlife'):
                 cur.execute('select link from {} where q_no = {};'.format(questionType, q_no))
                 link = cur.fetchone()[0]
                 if link:
