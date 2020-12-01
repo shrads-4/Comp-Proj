@@ -46,6 +46,13 @@ option_4 varchar(50));
 
 insert into famous_options values(1,"Vocal Music","Bharathanatyam","Playing Violin","Kathak"),(2,"Junko Tabei","Bachendri Pal","Anshu Jamsenpa","Lhakpa Sherpa"),(3,"Lal Bahadur Shastri","B.R.Ambedkar","K.Kamraj","M.G.Ramachandran"),(4,"Verghese Kurien","M. S. Swaminathan","Vikram Sarabhai","Baba Amte"),(5,"Cartoonist","Writer","Cricketer","Politician"),(6,"Meryl Streep","Denzel Washington","Al Pacino","Helen Hayes"),(7,"Rabindranath Tagore","Bakim Chandra Chatterji","Swami Vivekanand","None of the above"),(8,"Milkha Singh","Joginder Singh","Mohinder Singh","Ajit Pal Singh"),(9,"Economics","Electronics","Geology","Politics"),(10,"Sardar Vallabhbhai Patel","Subhash Chandra Bose","Jawaharlal Nehru","Govind Ballabh Pant");
 
+alter table geo_options
+add constraint foreign key geo_options(name) references geography(q_no);
+alter table history_options
+add constraint foreign key history_options(name) references history(q_no);
+alter table famous_options
+add constraint foreign key famous_options(name) references famous_people(q_no);
+
 
 
 
