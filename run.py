@@ -160,7 +160,7 @@ def run():
             runScreen.blit(background, (0, 0))
 
             #title and icon
-            pygame.display.set_caption("NameOfGame")
+            pygame.display.set_caption("Brain Rush!")
             icon = pygame.image.load('vampire.png')
             pygame.display.set_icon(icon)
 
@@ -235,7 +235,7 @@ def run():
             runScreen.blit(background, (0, 0))
 
             #title and icon
-            pygame.display.set_caption("NameOfGame")
+            pygame.display.set_caption("Brain Rush!")
             icon = pygame.image.load('vampire.png')
             pygame.display.set_icon(icon)
 

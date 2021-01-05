@@ -123,6 +123,7 @@ def main():
             box.update()
 
         screen.fill((174, 214, 220))
+        pg.display.set_caption("Brain Rush!")
         for box in input_boxes:
             box.draw(screen)
 

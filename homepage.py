@@ -103,6 +103,7 @@ def main(username):
     loop = 1
 
     while not done:
+        pg.display.set_caption("Brain Rush!")
         screen.fill((174, 214, 220))
 
         if loop:
@@ -114,7 +115,7 @@ def main(username):
             loop = 0
 
         screen.blit(font.render('Welcome to', True, (0, 0, 0)), (320, 50))
-        screen.blit(font.render('<name of game>', True, (0, 0, 0)), (280, 100))
+        screen.blit(font.render('Brain Rush!', True, (0, 0, 0)), (280, 100))
         playerImg = pg.image.load('vampire.png')
         screen.blit(playerImg, (375, 150))
 

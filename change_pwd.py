@@ -104,6 +104,8 @@ def main(username):
     done = False
 
     while not done:
+        pg.display.set_caption("Brain Rush!")
+
         for box in input_boxes:
             box.update()
 
@@ -115,7 +117,7 @@ def main(username):
         mouse=pg.mouse.get_pos()
         click=pg.mouse.get_pressed()
 
-        screen.blit(font.render('<nameofgame>', True,(0,0,0)),(300,50))
+        screen.blit(font.render('Brain Rush!', True,(0,0,0)),(300,50))
         playerImg = pg.image.load('vampire.png')
         screen.blit(playerImg, (375, 100))
         screen.blit(FONT.render('Current password', True, (0, 0, 0)),(150,250))

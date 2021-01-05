@@ -110,6 +110,7 @@ def main():
             box.update()
 
         screen.fill((174,214,220))
+        pg.display.set_caption("Brain Rush!")
 
         for box in input_boxes:
             box.draw(screen)
@@ -117,7 +118,7 @@ def main():
         mouse=pg.mouse.get_pos()
         click=pg.mouse.get_pressed()
 
-        screen.blit(font.render('<nameofgame>', True,(0,0,0)),(300,50))
+        screen.blit(font.render('Brain Rush!', True,(0,0,0)),(300,50))
         playerImg = pg.image.load('vampire.png')
         screen.blit(playerImg, (375, 100))
         screen.blit(FONT.render("Username", True, (0, 0, 0)),(100,200))

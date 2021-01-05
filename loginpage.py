@@ -107,6 +107,8 @@ def main():
     done = False
 
     while not done:
+        pg.display.set_caption("Brain Rush!")
+
         for box in input_boxes:
             box.update()
 
@@ -115,7 +117,7 @@ def main():
         input_box1.draw(screen, True)
         input_box2.draw(screen, False)
 
-        screen.blit(font.render('<nameofgame>', True,(0,0,0)),(300,50))
+        screen.blit(font.render('Brain Rush!', True,(0,0,0)),(300,50))
         playerImg = pg.image.load('vampire.png')
         screen.blit(playerImg, (375, 100))
         screen.blit(FONT.render('Username', True, (0, 0, 0)),(220,250))

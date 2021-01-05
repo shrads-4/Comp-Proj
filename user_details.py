@@ -101,6 +101,7 @@ def main(username,email):
             loop = 0
         
         screen.fill((174, 214, 220))
+        pg.display.set_caption("Brain Rush!")
     
         screen.blit(font.render('Username:'+username,True,(0,0,0)),(120,50))
         screen.blit(font.render('Email:'+email,True,(0,0,0)),(120,150))

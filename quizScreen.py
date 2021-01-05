@@ -125,7 +125,7 @@ def splitQ(que):
 
 def main():
     screen = pygame.display.set_mode((800, 640), pygame.RESIZABLE)
-    pygame.display.set_caption("<name/topic>")
+    pygame.display.set_caption("Brain Rush!")
     queTypeVariable = True
     questionType = False
     T = TypeList()
