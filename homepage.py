@@ -4,6 +4,7 @@ import run
 import mysql.connector
 import time
 import user_details
+import Leaderboard
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pg.init()
@@ -41,13 +42,11 @@ def main(username):
             pg.display.update()
 
     def showScore(username):
-        con = mysql.connector.connect(
-            host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
+        con = mysql.connector.connect(host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
         if con.is_connected():
             try:
                 cur = con.cursor()
-                cur.execute(
-                    'select high_score from user_dets where username = "{}"'.format(username))
+                cur.execute('select high_score from user_dets where username = "{}"'.format(username))
                 high_score = cur.fetchone()[0]
                 screen.fill((174,214,220))
                 showError('High Score: '+str(high_score), x=300, y=300, color = (0,0,0), size=35)
@@ -60,8 +59,7 @@ def main(username):
         return False
 
     def retrieveEmail(username):
-        con = mysql.connector.connect(
-            host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
+        con = mysql.connector.connect(host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
         if con.is_connected():
             try:
                 cur = con.cursor(buffered=True)
@@ -77,18 +75,15 @@ def main(username):
         return False
 
     def updateScore(score, username):
-        con = mysql.connector.connect(
-            host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
+        con = mysql.connector.connect(host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
         if con.is_connected():
             try:
                 cur = con.cursor()
-                cur.execute(
-                    'select high_score from user_dets where username = "{}"'.format(username))
+                cur.execute('select high_score from user_dets where username = "{}"'.format(username))
                 high_score = cur.fetchone()
                 if high_score:
                     if score > high_score[0]:
-                        cur.execute('update user_dets set high_score = {} where username = "{}"'.format(
-                            score, username))
+                        cur.execute('update user_dets set high_score = {} where username = "{}"'.format(score, username))
                         con.commit()
                         return True
             except mysql.connector.Error:
@@ -114,29 +109,33 @@ def main(username):
                     show = False
             loop = 0
 
-        screen.blit(font.render('Welcome to', True, (0, 0, 0)), (320, 50))
-        screen.blit(font.render('Brain Rush!', True, (0, 0, 0)), (280, 100))
+        screen.blit(font.render('Welcome to Brain Rush!', True, (0, 0, 0)), (250, 20))
         playerImg = pg.image.load('vampire.png')
-        screen.blit(playerImg, (375, 150))
+        screen.blit(playerImg, (370, 70))
 
         pos = pg.mouse.get_pos()
         click = pg.mouse.get_pressed()
-        button('Start running', 300, 250, 200, 42)
+        button('Start running', 300, 150, 200, 42)
+        button('How to play', 300, 250, 200, 42)
         button('High score', 300, 350, 200, 42)
         button('User details', 300, 450, 200, 42)
+        button('Leaderboard', 300, 550, 200, 42)
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 done = True
                 pg.quit()
 
-        if 500 > pos[0] > 300 and 292 > pos[1] > 250 and click[0] == 1 and not done:
+        if 500 > pos[0] > 300 and 192 > pos[1] > 150 and click[0] == 1 and not done:
             score = run.run()
             if updateScore(score, username):
                 try:
                     showError('New High Score!:'+str(score), x=200, y=100, size=35)
                 except:
                     pass
+                
+        if 500 > pos[0] > 300 and 292 > pos[1] > 250 and click[0] == 1 and not done:
+            pass
         
         if 500 > pos[0] > 300 and 392 > pos[1] > 350 and click[0] == 1 and not done:
             showScore(username)
@@ -147,6 +146,9 @@ def main(username):
             email = retrieveEmail(username)
             if email:
                 user_details.main(username, email)
+                
+        if 500 > pos[0] > 300 and 592 > pos[1] > 550 and click[0] == 1 and not done:
+            Leaderboard.main(username)
 
         try:
             pg.display.update()
