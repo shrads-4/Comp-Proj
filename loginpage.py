@@ -12,8 +12,8 @@ pg.init()
 screen = pg.display.set_mode((800, 640), pg.RESIZABLE)
 COLOR_INACTIVE = pg.Color(226,226,226)
 COLOR_ACTIVE = pg.Color(74,83,107)
-BFONT = pg.font.SysFont('Corbel', 15, bold=True)
-font=pg.font.SysFont('Corbel', 32, bold=True)
+font = pg.font.SysFont('Corbel', 15, bold=True)
+BFONT=pg.font.SysFont('Corbel', 32, bold=True)
 FONT = pg.font.SysFont('Corbel', 25, bold=True)
 
 class InputBox:
@@ -54,7 +54,7 @@ class InputBox:
         pg.draw.rect(screen, self.color, self.rect, 2)
 
 def textobjects(text,font):
-    textsurface=BFONT.render(text,True,(0,0,0))
+    textsurface=font.render(text,True,(0,0,0))
     return textsurface,textsurface.get_rect()
 
 def button(msg,x,y,w,h):
@@ -117,12 +117,13 @@ def main():
         input_box1.draw(screen, True)
         input_box2.draw(screen, False)
 
-        screen.blit(font.render('Brain Rush!', True,(0,0,0)),(300,50))
+        screen.blit(BFONT.render('Brain Rush!', True,(0,0,0)),(325,50))
         playerImg = pg.image.load('vampire.png')
+        pg.display.set_icon(playerImg)
         screen.blit(playerImg, (375, 100))
         screen.blit(FONT.render('Username', True, (0, 0, 0)),(220,250))
         screen.blit(FONT.render('Password', True,(0,0,0)),(220,350))
-        screen.blit(BFONT.render("Don't have an account? ",True,(0,0,0)),(115,550))
+        screen.blit(font.render("Don't have an account? ",True,(0,0,0)),(115,550))
 
         mouse=pg.mouse.get_pos()
         click=pg.mouse.get_pressed()

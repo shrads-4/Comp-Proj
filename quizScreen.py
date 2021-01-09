@@ -126,6 +126,8 @@ def splitQ(que):
 def main():
     screen = pygame.display.set_mode((800, 640), pygame.RESIZABLE)
     pygame.display.set_caption("Brain Rush!")
+    icon = pygame.image.load('vampire.png')
+    pygame.display.set_icon(icon)
     queTypeVariable = True
     questionType = False
     T = TypeList()

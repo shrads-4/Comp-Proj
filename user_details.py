@@ -6,33 +6,12 @@ import loginpage
 import signup
 import change_pwd
 import mysql.connector
+from functions import *
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pg.init()
 
-def main(username,email):
-    def textobjects(text,font):
-        textsurface=font.render(text,True,(0,0,0))
-        return textsurface,textsurface.get_rect()
-
-    def button(msg,x,y,w,h):
-        
-        pg.draw.rect(screen,(255,154,141),(x,y,w,h))
-        textsurf,textrect=textobjects(msg,RFONT)
-        textrect.center=((x+(w//2)),(y+(h//2)))
-        screen.blit(textsurf,textrect)
-
-    def showError(message, x = 200, y = 300):
-        start_time = time.time()
-        levelfont = pg.font.SysFont('Corbel', 25, italic = True)
-        text = levelfont.render(message, True, (255,0,0))
-        show = True
-        while show:
-            if time.time() - start_time < 2:
-                screen.blit(text, (x, y))
-            else:
-                show = False
-            pg.display.update()
+def main(username):
     
     def deleteAccount(username, password):
         con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha4', database = 'comp_proj')
@@ -46,14 +25,14 @@ def main(username,email):
                     con.commit()
                     return True
                 else:
-                    showError('Incorrect password',x=300)
+                    showError('Incorrect password', screen, x=300)
             except mysql.connector.Error:
-                showError('Database Issue; Please Try Later')
+                showError('Database Issue; Please Try Later', screen)
                 return False
             finally:
                 con.close()
         else:
-            showError('Error Connecting to Database; Please Try Later')
+            showError('Error Connecting to Database; Please Try Later', screen)
             return False
 
     def delAcc(username):
@@ -65,8 +44,8 @@ def main(username,email):
             inputbox.draw(screen)
             mouse=pg.mouse.get_pos()
             click=pg.mouse.get_pressed()
-            screen.blit(font.render('Enter Password', True,(0,0,0)),(150,260))
-            button('Submit',320,350,150,32)
+            screen.blit(FONT.render('Enter Password', True,(0,0,0)),(150,260))
+            button('Submit',320,350,150,32,screen)
             if 470>mouse[0]>320 and 382>mouse[1]>350 and click[0]==1 and not over:
                 over = True
             for event in pg.event.get():
@@ -80,14 +59,30 @@ def main(username,email):
                 pass
         password = inputbox.text
         if deleteAccount(username, password):
-            showError('Account deleted', 300)
+            showError('Account deleted', screen, 300)
             return 'signup'
         else:
             return 'homepage'
+    
+    def getEmail(username):
+        con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha4', database = 'comp_proj')
+        if con.is_connected():
+            try:
+                cur = con.cursor(buffered=True)
+                cur.execute('select email from user_dets where username="{}"'.format(username))
+                email = cur.fetchone()[0]
+                return email
+            except mysql.connector.Error:
+                showError('Database Issue; Please Try Later', screen)
+                return False
+            finally:
+                con.close()
+        else:
+            showError('Error Connecting to Database; Please Try Later', screen)
+            return False
 
     screen = pg.display.set_mode((800, 640), pg.RESIZABLE)
-    font=pg.font.SysFont('Corbel', 32, bold=True)
-    RFONT = pg.font.SysFont('Corbel', 20, bold=True)
+
     clock = pg.time.Clock()
     done=False
     loop = 1
@@ -102,16 +97,22 @@ def main(username,email):
         
         screen.fill((174, 214, 220))
         pg.display.set_caption("Brain Rush!")
+        icon = pg.image.load('vampire.png')
+        pg.display.set_icon(icon)
     
-        screen.blit(font.render('Username:'+username,True,(0,0,0)),(120,50))
-        screen.blit(font.render('Email:'+email,True,(0,0,0)),(120,150))
+        screen.blit(BFONT.render('Username: '+username,True,(0,0,0)),(120,50))
+        email=getEmail(username)
+        if email:
+            screen.blit(BFONT.render('Email: '+email,True,(0,0,0)),(120,150))
+        else:
+            screen.blit(BFONT.render('Email: ',True,(0,0,0)),(120,150))
         mouse=pg.mouse.get_pos()
         click=pg.mouse.get_pressed()
 
-        button('Change password',115,250,200,42)
-        button('Delete account',520,250,200,42)
-        button('Return to homepage',300,350,250,42)
-        button('Logout',320,450,200,42)
+        button('Change password',115,250,200,42,screen)
+        button('Delete account',520,250,200,42,screen)
+        button('Return to homepage',300,350,250,42,screen)
+        button('Logout',320,450,200,42,screen)
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -149,6 +150,5 @@ def main(username,email):
 
 if __name__ == "__main__":
     username='shrads'
-    email='shradp12@gmail.com'
-    main(username,email)
+    main(username)
     pg.quit()
