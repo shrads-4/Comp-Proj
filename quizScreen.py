@@ -49,6 +49,9 @@ def quiz(event, screen, que="<question>", options=["option1", "option2", "option
 
 def queType(event, screen, T):
 
+    bg_main = pygame.image.load("QImages\\quizbg.jpg")
+    screen.blit(bg_main,(0,0))
+
     screen.blit(FONT.render('Choose a Topic to Answer a Question and Proceed to Next Level!', True,(0,0,0)),(70,70))
 
     type1 = pygbutton.PygButton((300, 200, 200, 30), T[0], bgcolor=(255,154,141))
