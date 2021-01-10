@@ -10,7 +10,7 @@ font=pg.font.SysFont('Corbel', 32, bold=True)
 def main(username):
     done = False
     i=0
-    ImgList = [pg.image.load('TutorialImages\\homepage.png'),pg.image.load('TutorialImages\\run.png'),pg.image.load('TutorialImages\\gameover.png'),pg.image.load('TutorialImages\\homepage2.png'),pg.image.load('TutorialImages\\high score.png'),pg.image.load('TutorialImages\\homepage3.png'),pg.image.load('TutorialImages\\leaderboard.png'),pg.image.load('TutorialImages\\homepage4.png'),pg.image.load('TutorialImages\\userdets.png')]
+    ImgList = [pg.image.load('TutorialImages\\homepage.png'),pg.image.load('TutorialImages\\run.png'),pg.image.load('TutorialImages\\quiz1.png'),pg.image.load('TutorialImages\\quiz2.png'),pg.image.load('TutorialImages\\gameover.png'),pg.image.load('TutorialImages\\homepage2.png'),pg.image.load('TutorialImages\\high score.png'),pg.image.load('TutorialImages\\homepage3.png'),pg.image.load('TutorialImages\\leaderboard.png'),pg.image.load('TutorialImages\\homepage4.png'),pg.image.load('TutorialImages\\userdets.png')]
     while not done:
         pg.display.set_caption("Brain Rush!")
         screen.fill((174,214,220))

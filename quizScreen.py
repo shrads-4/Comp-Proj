@@ -76,7 +76,7 @@ def TypeList():
     return typeList[:3]
 
 def dbQueData(screen, questionType):
-    con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'TsSrTCNr3000', database = 'project20_21')
+    con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha4', database = 'comp_proj')
     if con.is_connected():
         try:
             cur = con.cursor()    
@@ -99,7 +99,7 @@ def dbQueData(screen, questionType):
                 cur.execute('select link from {} where q_no = {};'.format(questionType, q_no))
                 link = cur.fetchone()[0]
                 if link:
-                    image = pygame.image.load("QImages\\\\"+link+".png")
+                    image = pygame.image.load(link)
                     screen.blit(image,(0,0))
                 else:
                     bg = pygame.image.load("QImages\\background.png")
@@ -131,6 +131,8 @@ def splitQ(que):
 def main():
     screen = pygame.display.set_mode((800, 640), pygame.RESIZABLE)
     pygame.display.set_caption("Brain Rush!")
+    icon = pygame.image.load('vampire.png')
+    pygame.display.set_icon(icon)
     queTypeVariable = True
     questionType = False
     T = TypeList()
@@ -156,7 +158,7 @@ def main():
         running = True
 
     while running:
-        x=""
+        
         for event in pygame.event.get():
             Q = quiz(event, screen, question, options, length = length)
             if answer == Q:
