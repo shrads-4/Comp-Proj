@@ -15,7 +15,7 @@ pg.init()
 def main(username):
 
     clock = pg.time.Clock()
-
+    font = pg.font.SysFont('Corbel', 60, bold=True)
     screen = pg.display.set_mode((800, 640), pg.RESIZABLE)
     
     def showScore(username):
@@ -74,7 +74,10 @@ def main(username):
                     show = False
             loop = 0
 
-        screen.blit(BFONT.render('Welcome to Brain Rush!', True, (0, 0, 0)), (250, 20))
+        bg_main = pg.image.load("QImages\\traffic_wp.jpg")
+        screen.blit(bg_main,(0,0))
+        
+        screen.blit(font.render('Welcome to Brain Rush!!!', True, (0, 0, 0)), (50, 20))
         playerImg = pg.image.load('vampire.png')
         pg.display.set_icon(playerImg)
         screen.blit(playerImg, (370, 70))
