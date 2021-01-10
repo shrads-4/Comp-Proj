@@ -10,6 +10,9 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 pygame.init()
 
+FONT = pygame.font.SysFont('Corbel', 25, bold=True)
+
+
 def quiz(event, screen, que="<question>", options=["option1", "option2", "option3", "option4"], length = 200):
     
     Q = splitQ(que)
@@ -46,6 +49,8 @@ def quiz(event, screen, que="<question>", options=["option1", "option2", "option
 
 def queType(event, screen, T):
 
+    screen.blit(FONT.render('Choose a Topic to Answer a Question and Proceed to Next Level!', True,(0,0,0)),(70,70))
+
     type1 = pygbutton.PygButton((300, 200, 200, 30), T[0], bgcolor=(255,154,141))
     type2 = pygbutton.PygButton((300, 300, 200, 30), T[1], bgcolor=(255,154,141))
     type3 = pygbutton.PygButton((300, 400, 200, 30), T[2], bgcolor=(255,154,141))
@@ -71,7 +76,7 @@ def TypeList():
     return typeList[:3]
 
 def dbQueData(screen, questionType):
-    con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha4', database = 'comp_proj')
+    con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'TsSrTCNr3000', database = 'project20_21')
     if con.is_connected():
         try:
             cur = con.cursor()    
@@ -94,7 +99,7 @@ def dbQueData(screen, questionType):
                 cur.execute('select link from {} where q_no = {};'.format(questionType, q_no))
                 link = cur.fetchone()[0]
                 if link:
-                    image = pygame.image.load(link)
+                    image = pygame.image.load("QImages\\\\"+link+".png")
                     screen.blit(image,(0,0))
                 else:
                     bg = pygame.image.load("QImages\\background.png")
@@ -126,8 +131,6 @@ def splitQ(que):
 def main():
     screen = pygame.display.set_mode((800, 640), pygame.RESIZABLE)
     pygame.display.set_caption("Brain Rush!")
-    icon = pygame.image.load('vampire.png')
-    pygame.display.set_icon(icon)
     queTypeVariable = True
     questionType = False
     T = TypeList()
@@ -153,11 +156,20 @@ def main():
         running = True
 
     while running:
+        x=""
         for event in pygame.event.get():
             Q = quiz(event, screen, question, options, length = length)
             if answer == Q:
+                msg = FONT.render("That is CORRECT!!!", True, (50,50,50))
+                screen.blit(msg, [370, 520])
+                pygame.display.flip()
+                pygame.time.delay(1200)
                 return True
             elif Q:
+                msg = FONT.render("Oops, that is INCORRECT :(", True, (50,50,50))
+                screen.blit(msg, [370, 520])
+                pygame.display.flip()
+                pygame.time.delay(1200)
                 return False
             
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
