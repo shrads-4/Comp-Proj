@@ -45,6 +45,8 @@ def main(username):
         screen.fill((174, 214, 220))
         pg.display.set_caption("Brain Rush!")
         icon = pg.image.load('vampire.png')
+        bg_main = pg.image.load("QImages\\lbpg.jpg")
+        screen.blit(bg_main,(0,0))
         pg.display.set_icon(icon)
         
         screen.blit(BFONT.render('Leaderboard',True,(0,0,0)),(310,30))
