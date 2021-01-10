@@ -15,10 +15,10 @@ def main(username):
         pg.display.set_caption("Brain Rush!")
         screen.fill((174,214,220))
         
-        bg_main = pg.image.load("QImages\\lbg.png")
+        bg_main = pg.image.load("QImages\\batsbg.png")
         screen.blit(bg_main,(0,0))
 
-        screen.blit(font.render('How To Play', True,(0,0,0)),(325,40))
+        screen.blit(font.render('How To Play', True,(255,255,255)),(325,40))
 
         mouse=pg.mouse.get_pos()
         click=pg.mouse.get_pressed()

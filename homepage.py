@@ -77,7 +77,7 @@ def main(username):
         bg_main = pg.image.load("QImages\\traffic_wp.jpg")
         screen.blit(bg_main,(0,0))
         
-        screen.blit(font.render('Welcome to Brain Rush!!!', True, (0, 0, 0)), (50, 20))
+        screen.blit(font.render('Welcome to Brain Rush!!!', True, (0, 0, 0)), (75, 20))
         playerImg = pg.image.load('vampire.png')
         pg.display.set_icon(playerImg)
         screen.blit(playerImg, (370, 70))
