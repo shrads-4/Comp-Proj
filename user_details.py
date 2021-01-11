@@ -107,9 +107,9 @@ def main(username):
         screen.blit(BFONT.render('Username: '+username,True,(0,0,0)),(120,50))
         email=getEmail(username)
         if email:
-            screen.blit(BFONT.render('Email: '+email,True,(0,0,0)),(120,150))
+            screen.blit(BFONT.render('Email: '+email,True,(0,0,0)),(120,100))
         else:
-            screen.blit(BFONT.render('Email: ',True,(0,0,0)),(120,150))
+            screen.blit(BFONT.render('Email: ',True,(0,0,0)),(120,100))
         mouse=pg.mouse.get_pos()
         click=pg.mouse.get_pressed()
 
@@ -153,6 +153,6 @@ def main(username):
         clock.tick(30)
 
 if __name__ == "__main__":
-    username='shrads'
+    username='user'
     main(username)
     pg.quit()
