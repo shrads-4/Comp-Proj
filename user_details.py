@@ -41,6 +41,8 @@ def main(username):
         while not over:
             inputbox.update()
             screen.fill((174,214,220))
+            bg_main = pg.image.load("QImages\\brain.jpg")
+            screen.blit(bg_main,(0,0))
             inputbox.draw(screen)
             mouse=pg.mouse.get_pos()
             click=pg.mouse.get_pressed()
@@ -96,6 +98,8 @@ def main(username):
             loop = 0
         
         screen.fill((174, 214, 220))
+        bg_main = pg.image.load("QImages\\brain.jpg")
+        screen.blit(bg_main,(0,0))
         pg.display.set_caption("Brain Rush!")
         icon = pg.image.load('vampire.png')
         pg.display.set_icon(icon)

@@ -25,8 +25,9 @@ def main(username):
                 cur = con.cursor()
                 cur.execute('select high_score from user_dets where username = "{}"'.format(username))
                 high_score = cur.fetchone()[0]
-                screen.fill((174,214,220))
-                showError('High Score: '+str(high_score), screen, x=300, y=300, color = (0,0,0), size=35)
+                bgImg = pg.image.load('QImages\\confetti.jpg')
+                screen.blit(bgImg,(0,0))
+                showError('High Score: '+str(high_score), screen, x=290, y=300, color = (0,0,0), size=35)
             except mysql.connector.Error:
                 showError('Database Issue; Please Try Later',screen)
             finally:

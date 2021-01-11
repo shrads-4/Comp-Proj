@@ -3,7 +3,6 @@ import os
 import homepage
 import time
 import mysql.connector
-import user_details
 import loginpage
 from functions import *
 
@@ -27,7 +26,7 @@ def validateUser(username,email,dob,newpwd):
                 showError('User information does not match. Try Again.',screen)
                 return False
         except mysql.connector.Error:
-            showError('Database Issue; Please Try Later',screen)
+            showError('Database Issue; Please enter valid information.',screen)
             return False
         finally:
             con.close()
@@ -49,6 +48,8 @@ def main():
             box.update()
 
         screen.fill((174,214,220))
+        bg_main = pg.image.load("QImages\\road.jpg")
+        screen.blit(bg_main,(0,0))
         pg.display.set_caption("Brain Rush!")
 
         for box in input_boxes:
@@ -81,7 +82,7 @@ def main():
             if Username and Email and DOB and new_pwd and validateUser(Username,Email,DOB,new_pwd) and not done:
                 done = True
                 showError('Password has been reset',screen)
-                user_details.main(Username)
+                homepage.main(Username)
                 
         
         if 200>mouse[0]>50 and 612>mouse[1]>580 and click[0]==1 and not done:

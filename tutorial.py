@@ -10,15 +10,17 @@ font=pg.font.SysFont('Corbel', 32, bold=True)
 def main(username):
     done = False
     i=0
-    ImgList = [pg.image.load('TutorialImages\\homepage.png'),pg.image.load('TutorialImages\\run.png'),pg.image.load('TutorialImages\\gameover.png'),pg.image.load('TutorialImages\\homepage2.png'),pg.image.load('TutorialImages\\high score.png'),pg.image.load('TutorialImages\\homepage3.png'),pg.image.load('TutorialImages\\leaderboard.png'),pg.image.load('TutorialImages\\homepage4.png'),pg.image.load('TutorialImages\\userdets.png')]
+    ImgList = [pg.image.load('TutorialImages\\homepage.png'),pg.image.load('TutorialImages\\run.png'),pg.image.load('TutorialImages\\quiz1.png'),pg.image.load('TutorialImages\\quiz2.png'),pg.image.load('TutorialImages\\gameover.png'),pg.image.load('TutorialImages\\homepage2.png'),pg.image.load('TutorialImages\\high score.png'),pg.image.load('TutorialImages\\homepage3.png'),pg.image.load('TutorialImages\\leaderboard.png'),pg.image.load('TutorialImages\\homepage4.png'),pg.image.load('TutorialImages\\userdets.png')]
     while not done:
         pg.display.set_caption("Brain Rush!")
         screen.fill((174,214,220))
         
-        bg_main = pg.image.load("QImages\\batsbg.png")
+        bg_main = pg.image.load("QImages\\road.jpg")
         screen.blit(bg_main,(0,0))
+        playerImg = pg.image.load('vampire.png')
+        pg.display.set_icon(playerImg)
 
-        screen.blit(font.render('How To Play', True,(255,255,255)),(325,40))
+        screen.blit(font.render('How To Play', True,(0,0,0)),(325,40))
 
         mouse=pg.mouse.get_pos()
         click=pg.mouse.get_pressed()

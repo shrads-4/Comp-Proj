@@ -49,6 +49,8 @@ def main(username):
             box.update()
 
         screen.fill((174,214,220))
+        bg_main = pg.image.load("QImages\\brain.jpg")
+        screen.blit(bg_main,(0,0))
 
         for box in input_boxes:
             box.draw(screen)

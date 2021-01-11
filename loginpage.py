@@ -113,7 +113,9 @@ def main():
             box.update()
 
         screen.fill((174,214,220))
-        
+        bg_main = pg.image.load("QImages\\road.jpg")
+        screen.blit(bg_main,(0,0))
+
         input_box1.draw(screen, True)
         input_box2.draw(screen, False)
 
