@@ -1,20 +1,15 @@
-import pygame as pg
-import os
-import homepage
-import time
-import mysql.connector
-import signup
-import forgotpswd
+import pygame as pg, os, homepage, time, mysql.connector, signup, forgotpswd
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 pg.init()
 screen = pg.display.set_mode((800, 640), pg.RESIZABLE)
-COLOR_INACTIVE = pg.Color(226,226,226)
-COLOR_ACTIVE = pg.Color(74,83,107)
+COLOR_INACTIVE = pg.Color(226, 226, 226)
+COLOR_ACTIVE = pg.Color(74, 83, 107)
 font = pg.font.SysFont('Corbel', 15, bold=True)
-BFONT=pg.font.SysFont('Corbel', 32, bold=True)
+BFONT = pg.font.SysFont('Corbel', 32, bold=True)
 FONT = pg.font.SysFont('Corbel', 25, bold=True)
+
 
 class InputBox:
 
@@ -50,20 +45,24 @@ class InputBox:
         if user:
             screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
         else:
-            screen.blit(FONT.render("*"*len(self.text),True, COLOR_ACTIVE), (self.rect.x+5, self.rect.y+5))
+            screen.blit(FONT.render("*"*len(self.text), True,
+                                    COLOR_ACTIVE), (self.rect.x+5, self.rect.y+5))
         pg.draw.rect(screen, self.color, self.rect, 2)
 
-def textobjects(text,font):
-    textsurface=font.render(text,True,(0,0,0))
-    return textsurface,textsurface.get_rect()
 
-def button(msg,x,y,w,h):
-    
-    pg.draw.rect(screen,(255,154,141),(x,y,w,h))
-    textsurf,textrect=textobjects(msg,font)
-    textrect.center=((x+(w//2)),(y+(h//2)))
-    screen.blit(textsurf,textrect)
-    
+def textobjects(text, font):
+    textsurface = font.render(text, True, (0, 0, 0))
+    return textsurface, textsurface.get_rect()
+
+
+def button(msg, x, y, w, h):
+
+    pg.draw.rect(screen, (255, 154, 141), (x, y, w, h))
+    textsurf, textrect = textobjects(msg, font)
+    textrect.center = ((x+(w//2)), (y+(h//2)))
+    screen.blit(textsurf, textrect)
+
+
 def showError(message):
     start_time = time.time()
     levelfont = pg.font.SysFont('Corbel', 25)
@@ -76,12 +75,15 @@ def showError(message):
             show = False
         pg.display.update()
 
+
 def validatePwd(username, pwd):
-    con = mysql.connector.connect(host = 'localhost', user = 'root', passwd = 'Shraddha4', database = 'comp_proj')
+    con = mysql.connector.connect(
+        host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
     if con.is_connected():
         try:
             cur = con.cursor()
-            cur.execute('select pwd from user_dets where username = "{}"'.format(username))
+            cur.execute(
+                'select pwd from user_dets where username = "{}"'.format(username))
             result = cur.fetchone()
             if result:
                 if pwd == result[0]:
@@ -99,40 +101,41 @@ def validatePwd(username, pwd):
         showError('Error Connecting to Database; Please Try Later')
     return False
 
+
 def main():
     clock = pg.time.Clock()
     input_box1 = InputBox(350, 250, 140, 32)
     input_box2 = InputBox(350, 350, 140, 32)
     input_boxes = [input_box1, input_box2]
     done = False
+    bg_main = pg.image.load("QImages\\road.jpg")
+    pg.display.set_caption("Brain Rush!")
+    playerImg = pg.image.load('vampire.png')
+    pg.display.set_icon(playerImg)
 
     while not done:
-        pg.display.set_caption("Brain Rush!")
+
+        screen.blit(bg_main, (0, 0))
 
         for box in input_boxes:
             box.update()
 
-        screen.fill((174,214,220))
-        bg_main = pg.image.load("QImages\\road.jpg")
-        screen.blit(bg_main,(0,0))
-
         input_box1.draw(screen, True)
         input_box2.draw(screen, False)
 
-        screen.blit(BFONT.render('Brain Rush!', True,(0,0,0)),(325,50))
-        playerImg = pg.image.load('vampire.png')
-        pg.display.set_icon(playerImg)
+        screen.blit(BFONT.render('Brain Rush!', True, (0, 0, 0)), (325, 50))
         screen.blit(playerImg, (375, 100))
-        screen.blit(FONT.render('Username', True, (0, 0, 0)),(220,250))
-        screen.blit(FONT.render('Password', True,(0,0,0)),(220,350))
-        screen.blit(font.render("Don't have an account? ",True,(0,0,0)),(115,550))
+        screen.blit(FONT.render('Username', True, (0, 0, 0)), (220, 250))
+        screen.blit(FONT.render('Password', True, (0, 0, 0)), (220, 350))
+        screen.blit(font.render("Don't have an account? ",
+                                True, (0, 0, 0)), (115, 550))
 
-        mouse=pg.mouse.get_pos()
-        click=pg.mouse.get_pressed()
+        mouse = pg.mouse.get_pos()
+        click = pg.mouse.get_pressed()
 
-        button('Login',390,450,100,32)
-        button('Sign up!',270,540,100,32)
-        button('Forgot password?',520,540,150,32)
+        button('Login', 390, 450, 100, 32)
+        button('Sign up!', 270, 540, 100, 32)
+        button('Forgot password?', 520, 540, 150, 32)
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -141,17 +144,17 @@ def main():
             for box in input_boxes:
                 box.handle_event(event)
 
-        if 490>mouse[0]>390 and 482>mouse[1]>450 and click[0]==1 and not done:
+        if 490 > mouse[0] > 390 and 482 > mouse[1] > 450 and click[0] == 1 and not done:
             username, pwd = input_boxes[0].text, input_boxes[1].text
             if username and pwd and validatePwd(username, pwd):
                 done = True
                 homepage.main(username)
-        
-        if 370>mouse[0]>270 and 572>mouse[1]>540 and click[0]==1 and not done:
+
+        if 370 > mouse[0] > 270 and 572 > mouse[1] > 540 and click[0] == 1 and not done:
             done = True
             signup.main()
-        
-        if 670>mouse[0]>520 and 572>mouse[1]>540 and click[0]==1 and not done:
+
+        if 670 > mouse[0] > 520 and 572 > mouse[1] > 540 and click[0] == 1 and not done:
             done = True
             forgotpswd.main()
 
@@ -160,7 +163,8 @@ def main():
         except:
             pass
         clock.tick(30)
-        
+
+
 if __name__ == '__main__':
     main()
     pg.quit()

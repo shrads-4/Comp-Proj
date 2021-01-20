@@ -1,9 +1,4 @@
-import pygame
-import math
-import random
-import os
-import time
-import quizScreen
+import pygame, math, random, os, time, quizScreen
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -32,7 +27,6 @@ def run():
 
     X, Y, imgD = {}, {}, {}
 
-
     def obsDicts(noOfObstacles, imgList, XList, obstacleY, X, Y, imgD):
         for i in range(noOfObstacles):
             img = imgList[random.randint(0, 3)]
@@ -52,15 +46,12 @@ def run():
                 show = False
             pygame.display.update()
 
-
     def player(playerX, playerY, runScreen, playerImg):
         runScreen.blit(playerImg, (playerX, playerY))
-
 
     def obstacle(imgD, X, Y, noOfObstacles, runScreen):
         for i in range(noOfObstacles):
             runScreen.blit(imgD[i], (X[i], Y[i]))
-
 
     def collide(playerX, playerY, obstacleX, obstacleY):
         dist = math.fabs(playerY-obstacleY)
@@ -69,14 +60,12 @@ def run():
         else:
             return False
 
-
     def gameOver(score, runScreen):
-        gameFont = pygame.font.SysFont('Corbel', 64, bold = True)
+        gameFont = pygame.font.SysFont('Corbel', 64, bold=True)
         gameText1 = gameFont.render('GAME OVER', True, (255, 255, 255))
         runScreen.blit(gameText1, (200, 200))
         gameText2 = gameFont.render('Score:'+str(score), True, (255, 255, 255))
         runScreen.blit(gameText2, (250, 300))
-
 
     def overlap(X, Y, i, noOfObstacles):
         for j in range(noOfObstacles):
@@ -85,7 +74,6 @@ def run():
                     return True
         else:
             return False
-
 
     def spaced(X, Y, i, noOfObstacles, XList):
         if overlap(X, Y, i, noOfObstacles):
@@ -98,29 +86,30 @@ def run():
         else:
             return
 
-
     def returnButton(mouse, runScreen):
         # button
         buttonX = 300
         buttonY = 400
         color_light = (100, 100, 100)
         color_dark = (50, 50, 50)
-        smallfont = pygame.font.SysFont('Corbel', 15, bold = True)
-        returnText = smallfont.render('return to home page', True, (255, 255, 255))
+        smallfont = pygame.font.SysFont('Corbel', 15, bold=True)
+        returnText = smallfont.render(
+            'return to home page', True, (255, 255, 255))
         if buttonX <= mouse[0] <= buttonX+140 and buttonY <= mouse[1] <= buttonY+40:
-            pygame.draw.rect(runScreen, color_light, [buttonX, buttonY, 140, 40])
+            pygame.draw.rect(runScreen, color_light, [
+                             buttonX, buttonY, 140, 40])
             for event in pygame.event.get():
-                if event.type==pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     return False
         else:
-            pygame.draw.rect(runScreen, color_dark, [buttonX, buttonY, 140, 40])
+            pygame.draw.rect(runScreen, color_dark, [
+                             buttonX, buttonY, 140, 40])
         runScreen.blit(returnText, (buttonX+5, buttonY+10))
         return True
 
-
     def questions(X, Y, Y_change, quiz, running, level, noOfObstacles, playerX, playerY, imgList, XList, obstacleY, imgD):
         i = 1
-        while i>0 and quiz:
+        while i > 0 and quiz:
             correct = quizScreen.main()
             if not correct:
                 Y[i] = playerY
@@ -150,6 +139,10 @@ def run():
     running = True
     quiz = False
     levelChange = 500
+    icon = pygame.image.load('vampire.png')
+    #title and icon
+    pygame.display.set_caption("Brain Rush!")
+    pygame.display.set_icon(icon)
 
     while not done:
 
@@ -158,11 +151,6 @@ def run():
 
             # background
             runScreen.blit(background, (0, 0))
-
-            #title and icon
-            pygame.display.set_caption("Brain Rush!")
-            icon = pygame.image.load('vampire.png')
-            pygame.display.set_icon(icon)
 
             if c % levelChange == 1 and c != 1 and over:
                 showlevel(level, runScreen)
@@ -198,7 +186,7 @@ def run():
             if c % levelChange == 0 and over:
                 running = False
                 quiz = True
-            
+
             obstacle(imgD, X, Y, noOfObstacles, runScreen)
             player(playerX, playerY, runScreen, playerImg)
 
@@ -234,16 +222,12 @@ def run():
             # background
             runScreen.blit(background, (0, 0))
 
-            #title and icon
-            pygame.display.set_caption("Brain Rush!")
-            icon = pygame.image.load('vampire.png')
-            pygame.display.set_icon(icon)
-
             for i in range(noOfObstacles):
                 Y[i] += Y_change
 
                 if Y[i] >= 450:
-                    Y_change, noOfObstacles, level, running, quiz = questions(X, Y, Y_change, quiz, running, level, noOfObstacles, playerX, playerY, imgList, XList, obstacleY, imgD)
+                    Y_change, noOfObstacles, level, running, quiz = questions(
+                        X, Y, Y_change, quiz, running, level, noOfObstacles, playerX, playerY, imgList, XList, obstacleY, imgD)
 
             obstacle(imgD, X, Y, noOfObstacles, runScreen)
             player(playerX, playerY, runScreen, playerImg)
@@ -261,6 +245,7 @@ def run():
                 pass
 
     return score
+
 
 if __name__ == "__main__":
     run()
