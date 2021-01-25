@@ -1,4 +1,5 @@
 import pygame, pygbutton, time, os, random, mysql.connector
+from functions import password
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -86,7 +87,7 @@ def TypeList():
 
 def dbQueData(screen, questionType):
     con = mysql.connector.connect(
-        host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
+        host='localhost', user='root', passwd=password, database='brain_rush')
     if con.is_connected():
         try:
             cur = con.cursor()

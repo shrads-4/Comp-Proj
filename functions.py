@@ -2,6 +2,8 @@ import pygame as pg, time
 
 pg.init()
 
+password = 'Shraddha4'
+
 font = pg.font.SysFont('Corbel', 15, bold=True)
 BFONT = pg.font.SysFont('Corbel', 32, bold=True)
 FONT = pg.font.SysFont('Corbel', 25, bold=True)

@@ -1,0 +1,193 @@
+CREATE DATABASE brain_rush;
+
+USE brain_rush;
+
+CREATE TABLE user_dets
+(
+    username varchar(30) not null primary key,
+    pwd varchar(50) not null,
+    email varchar(60) not null unique,
+    dob date not null,
+    high_score int not null default 0
+);
+
+CREATE TABLE famous
+(
+    q_no int not null primary key,
+    question varchar(200) not null
+);
+
+CREATE TABLE food
+(
+    q_no int not null primary key,
+    question varchar(200) not null,
+    link varchar(200)
+);
+
+CREATE TABLE geography
+(
+    q_no int not null primary key,
+    question varchar(200) not null
+);
+
+CREATE TABLE history
+(
+    q_no int not null primary key,
+    question varchar(200) not null
+);
+
+CREATE TABLE music
+(
+    q_no int not null primary key,
+    question varchar(200) not null
+);
+
+CREATE TABLE sports
+(
+    q_no int not null primary key,
+    question varchar(200) not null
+);
+
+CREATE TABLE tourism
+(
+    q_no int not null primary key,
+    question varchar(200) not null,
+    link varchar(200)
+);
+
+CREATE TABLE wildlife
+(
+    q_no int not null primary key,
+    question varchar(200) not null,
+    link varchar(200)
+);
+
+CREATE TABLE famous_options
+(
+    name int not null primary key,
+    option_1 varchar(50),
+    option_2 varchar(50),
+    option_3 varchar(50),
+    option_4 varchar(50),
+    FOREIGN KEY(name) REFERENCES famous(q_no)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE TABLE food_options
+(
+    name int not null primary key,
+    option_1 varchar(50),
+    option_2 varchar(50),
+    option_3 varchar(50),
+    option_4 varchar(50),
+    FOREIGN KEY(name) REFERENCES food(q_no)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE TABLE geography_options
+(
+    name int not null primary key,
+    option_1 varchar(50),
+    option_2 varchar(50),
+    option_3 varchar(50),
+    option_4 varchar(50),
+    FOREIGN KEY(name) REFERENCES geography(q_no)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE TABLE history_options
+(
+    name int not null primary key,
+    option_1 varchar(50),
+    option_2 varchar(50),
+    option_3 varchar(50),
+    option_4 varchar(50),
+    FOREIGN KEY(name) REFERENCES history(q_no)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE TABLE music_options
+(
+    name int not null primary key,
+    option_1 varchar(50),
+    option_2 varchar(50),
+    option_3 varchar(50),
+    option_4 varchar(50),
+    FOREIGN KEY(name) REFERENCES music(q_no)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE TABLE sports_options
+(
+    name int not null primary key,
+    option_1 varchar(50),
+    option_2 varchar(50),
+    option_3 varchar(50),
+    option_4 varchar(50),
+    FOREIGN KEY(name) REFERENCES sports(q_no)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE TABLE tourism_options
+(
+    name int not null primary key,
+    option_1 varchar(50),
+    option_2 varchar(50),
+    option_3 varchar(50),
+    option_4 varchar(50),
+    FOREIGN KEY(name) REFERENCES tourism(q_no)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE TABLE wildlife_options
+(
+    name int not null primary key,
+    option_1 varchar(50),
+    option_2 varchar(50),
+    option_3 varchar(50),
+    option_4 varchar(50),
+    FOREIGN KEY(name) REFERENCES wildlife(q_no)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+INSERT INTO famous values(1,"Dr. M.S.Subbalakshmi has distinguished herself in the field of..."),(2,"Who was the first woman to scale Mount Everest?"),(3,"Who was the first posthumous recipient of Bharat Ratna?"),(4,"Who is called the 'Father of White Revolution' in India?"),(5,"R.K. Laxman is a renowned..."),(6,"Which actor holds the record for most Oscar nominations?"),(7,"Who wrote the Indian National Anthem?"),(8,"Who is the Flying Sikh of India?"),(9,"Professor Amartya Sen is famous in which of these fields?"),(10,"Who was known as the Iron Man of India?");
+
+INSERT INTO food values(1,"What is the name of this dish?","QImages\\food1.png"),(2,"The Mayan and Aztec peoples used cocoa beans not only to make a delicious beverage but also as",null),(3,"Which chocolate brand has the slogan:'Melts in your mouth, not in your hand'?",null),(4,"Which type of beans are used to make baked beans?",null),(5,"If you ordered nigiri from a Japanese restaurant menu what would you be served?",null),(6,"Which flower does the spice saffron come from?",null),(7,"Gruyère is a cheese from which country?",null),(8,"What is this spread called?","QImages\\food8.png"),(9,"Which of these is NOT a type of mushroom?",null),(10,"What is a Goosnargh cake?",null),(11,"In Indonesian and Malay cuisine what does the word 'nasi' refer to?",null),(12,"Identify the dish","QImages\\food12.png"),(13,"Which of the following does not feature on the ingredients list of Worcestershire Sauce?",null),(14,"What is this pastry called?","QImages\\food14.png"),(15,"Which country is renowned for chocolate?",null),(16,"Name the bread","QImages\\food16.png"),(17,"Which country does the word 'mocha' come from?",null),(18,"Which dessert is this?","QImages\\food18.png"),(19,"What item is on the table at every Ethiopian meal?",null),(20,"Eating sushi in its homeland is a highlight of a trip to Japan; which of these is a vital ingredient in sushi?",null),(21,"Do you know this fresh and earthy treat that dates all the way back to Ancient Rome?","QImages\\food21.png"),(22,"'Spice bag' – a mix of chips, chicken, red and green peppers, chilli and onions – was voted 2020's favourite takeaway dish in which country?",null),(23,"What is the name of this dish?","QImages\\food23.png"),(24,"Roti canai, flatbreads with spicy dal, originated in India, but which country has particularly taken them to its heart?",null),(25,"What is this dessert called?","QImages\\food25.png"),(26,"Traditional French pot-au-feu is usually made with which meat?",null),(27,"Which of Italy's popular pasta shapes does not feature in the photo below?","QImages\\food27.png"),(28,"Originating in the Middle East, falafel is now a beloved street food around the world. What is commonly the main ingredient in falafel?",null),(29,"What are these called?","QImages\\food29.png"),(30,"What is the name of this dumpling dish?","QImages\\food30.png"),(31,"What is the name of this dish?","QImages\\food31.png"),(32,"Can you name these crunchy pieces of seasoned bread that are commonly served atop salad?","QImages\\food32.png");
+
+INSERT INTO geography values(1,"Which of the following places receives the highest rainfall in the world?"),(2,"Corbett National Park is in..."),(3,"Which of the following imaginary line almost divides India into two equal parts?"),(4,"Which of the following water bodies is the home of Lakshadweep?"),(5,"Which of the following rivers has the largest river basin in India?"),(6,"The landmass of which of the following continents is the least?"),(7,"Which of the following is tropical grassland?"),(8,"The island of Sri Lanka was formerly known as"),(9,"The largest country in the world by geographical area is"),(10,"The islands of Seychelles are located in the...");
+
+INSERT INTO history values(1,"To which king belongs the Lion Capital at Sarnath?"),(2,"Tipu sultan was the ruler of..."),(3,"The British set up their first factory in India at..."),(4,"Who is called the 'Father of the Indian National Congress'?"),(5,"Who constructed the Grand Trunk Road?"),(6,"Who painted the Mona Lisa?"),(7,"The Industrial Revolution was started in which country?"),(8,"'Mein Kampf' is the autobiography of which political leader?"),(9,"Which pharaoh built The Great Pyramid of Giza?"),(10,"Who was the first President of the United States of America?");
+
+INSERT INTO music values(1,"Smokey Robinson was a member of which Motown band?"),(2,"What's the first lyric in Shania Twain's 'Man I Feel Like a Woman'?"),(3,"According to the title of a Bananarama song, which actor is 'waiting'?"),(4,"Which of the following songs was released the earliest?"),(5,"The music video for which chart-topping song features Britney Spears dressed as a flight attendant?"),(6,"Which bird does Nicki Minaj reference in 'Super Bass'?"),(7,"Which former couple DIDN'T release a cover of 'A Whole New World'?"),(8,"Which Abba song wasn't featured in the first Mamma Mia film?"),(9,"Gerard Way is the lead vocalist of which rock band?"),(10,"A cover of Prince's track 'I Feel for You' topped the charts in 1984. Who sang it?"),(11,"'Landslide,' 'Rhiannon' and 'Dreams' are all songs by which band?"),(12,"Which of the following songs was released the earliest?"),(13,"What was Adele's first UK No. 1 single?"),(14,"Michael Jackson's 'Thriller' is the best selling album of all time - which of the following ISN'T featured on the album?"),(15,"Which of the following ISN'T a lyric in 'Survivor' by Destiny's Child?"),(16,"Who was awarded both record and album of the year at the Grammy's in January 2020?"),(17,"According to Enimen's 'The Real Slim Shady,' who doesn't have to 'cuss to sell records'?"),(18,"Name the person who replaced Ozzy Osbourne as Black Sabbaths lead singer."),(19,"To consider a band as a Big Band what is the minimum number of musicians needed?"),(20,"Bjork was lead singer of which Icelandic band before pursuing a solo career?"),(21,"In an Orchestra, which is the largest brass section instrument?"),(22,"Name the singer who released the album 'Alf'"),(23,"Name the singer who released the album, 'Here, My Dear'."),(24,"Puff the Magic Dragon lives in..."),(25,"A tribute to David Bowie's ex-wife was given with a song by The Rolling stones. Name the song."),(26,"Name the blues great who was born Ellas Otha Bates?"),(27,"Name the band having its name after a scientist from the movie Barbarella."),(28,"Name the all-time bestselling movie soundtrack."),(29,"The most played song on American radio during the 20th century was..."),(30,"Name the musical director of the New York Philharmonic from 1958 to 1970."),(31,"The Clawhammer is a playing style associated with an instrument. What is it?"),(32,"The 2001 Grammy Award for Best New Artist was won by whom?");
+
+INSERT INTO sports values(1,"Who was the first Indian in independent India to have won a medal in an individual Olympic event?"),(2,"What does the Olympic Flame symbolize?"),(3,"Which among the following is the women's equivalent of the Davis Cup?"),(4,"The name of S Vijayalakshmi is famous in which among the following games/sports?"),(5,"The famous football player Maradona belongs to which among the following countries?"),(6,"The term 'Tee' is used commonly in which among the following sports?"),(7,"The Ryder Cup is related to which sports?"),(8,"Who among the following was the First Indian Woman to get an Olympic Medal?"),(9,"The Commonwealth Games started in which of the following countries?"),(10,"Velodrome is an arena for which among the following sporting events?"),(11,"Who among the following was the First Indian Cricketer to bag 500 wickets in Test matches?"),(12,"India played its first one day international with which country and in which year?"),(13,"World's highest hockey ground is located in"),(14,"A game called 'Mokshapat was created by the 13th century poet saint Gyandev. It is the original version of which of the following games of today?"),(15,"At which of the following tennis tournaments is the Musketeers' Trophy awarded to the winner of the Singles title?"),(16,"Who of the following ran a mile in less than 4 minutes for the first time?"),(17,"The nine-time Wimbledon Champion of Women's Singles Match in Tennis is"),(18,"Who of the following was the first gymnast to be awarded a perfect score of 10 in an Olympic event?"),(19,"Which of the following badminton tournaments does not have any prize money associated with it?"),(20,"The oldest Football Tournament in India is..."),(21,"The modern game of polo originated in which of the following Indian states?"),(22,"What is the official distance to be run in a marathon race?"),(23,"Who of the following holds the record in 100m sprint for women in 1988?"),(24,"Which Indian city is associated with the origin of badminton?"),(25,"Which of the following is the oldest tennis tournament?"),(26,"With which of the following is the Bermuda Bowl trophy associated?"),(27,"Sambo, a form of martial arts, is associated with which country?"),(28,"Who among the following was the first heavyweight boxer to go undefeated throughout his career?"),(29,"Who was the first athlete to break the 10-second barrier in the 100 meter sprint?"),(30,"Who of the following was nicknamed the Flying Finn?"),(31,"Which Indian Cricketer got the Laureus Sporting Moment honour?"),(32,"Who was the Flag bearer at the Rio Olympics-2016 opening ceremony for Indian Contingent?");
+
+INSERT INTO tourism values(1,"Where is this found?","QImages\\tourism1.png"),(2,"How many islands does Australia have within its maritime borders?",null),(3,"You're handed a beer, you raise your glass and say 'Saúde'. Which of these 4 countries are you most likely in?",null),(4,"Vientiane is the capital of which country?",null),(5,"If you are catching a flight and the relevant airport codes are NRT-ORD, where are you going?",null),(6,"March saw the launch of a non stop flight between UK and Australia. Where does it land?",null),(7,"This is the former flag of which country?","QImages\\tourism7.png"),(8,"Which two cities were the European Capitals of Culture in 2018?",null),(9,"Which country marked its centenary on February 24 2018?",null),(10,"La Digue, Curieuse, and Silhouette are islands in which archipelago nation?",null),(11,"In October, Singapore Airlines reintroduced the world's longest flight - a 9,534-mile odyssey from Singapore to...",null),(12,"This Italian island is home to the rich and fashionable, as well as iconic movie stars such as Sophia Loren. Which island is this?","QImages\\tourism12.png"),(13,"Sfax, Monastir, and Mahdia are cities in which the Mediterranean country?",null),(14,"This is the flag of which country?","QImages\\tourism14.png"),(15,"In which country did the 2018 Giro D'Italia cycle race begin?",null),(16,"Which of the following is NOT one of the United Arab Emirates?",null),(17,"This Greek island's beautiful blue and white buildings are super-Instagrammable. Which island is this?","QImages\\tourism17.png"),(18,"Which of the following is NOT a Greek island?",null),(19,"If you turned the Indonesian flag upside down which European country's flag would you get?",null),(20,"This is the world's tallest flagpole – where is it?","QImages\\tourism20.png"),(21,"The flag of 3 of these countries have green, white and orange. Which does not?",null),(22,"What do the national flags of Belize, Guatemala, Mozambique and Saudi Arabia have in common?",null),(23,"This Indonesian island is known for yoga retreats, tiered rice fields, and colorful Hindu temples. Which island is this?","QImages\\tourism23.png"),(24,"Which of these countries is not landlocked?",null),(25,"The Spanish Steps (seen below) are found in which city?","QImages\\tourism25.png"),(26,"Which two countries in South America are the Iguazu Falls part of?",null),(27,"Where in the Middle East is this?","QImages\\tourism27.png"),(28,"The Aruba Caribbean island is a territory of which European country?",null),(29,"Where in Africa are these famous trees? (Avenue of the Baobabs)","QImages\\tourism29.png"),(30,"Which country is this?","QImages\\tourism30.png"),(31,"Where in Asia will you find this famous place?","QImages\\tourism31.png"),(32,"The Baltic States refer to which countries?",null);
+
+INSERT INTO wildlife values(1,"What is a group of owls called?",null),(2,"Which of these animals uses echolocation to navigate?",null),(3,"What can a Jesus Christ lizard do?",null),(4,"Identify the bird in the picture","QImages\\wildlife4.png"),(5,"In what country would you find the world's northernmost wild monkey population?",null),(6,"Which of these mammals lays eggs?",null),(7,"Which of these animals are not endangered?",null),(8,"Identify the bird in the picture","QImages\\wildlife8.png"),(9,"What is the most poisonous snake on the planet?",null),(10,"Which is the biggest species of shark?",null),(11,"Identify the animal in the picture","QImages\\wildlife11.png"),(12,"Which bird inflates a bright red balloon on its neck to attract a mate?",null),(13,"What is a distinguishing feature of a marsupial?",null),(14,"Desert tortoises are adapted to live in the desert. Which of the following is NOT true?",null),(15,"Identify the bird in the picture","QImages\\wildlife15.png"),(16,"Which of these is the slowest animal?",null),(17,"Identify the animal in the picture","QImages\\wildlife17.png"),(18,"A snail can sleep for how long?",null),(19,"Which bird builds nests that are considered a delicacy in some countries?",null),(20,"Which of these animals never sleep?",null),(21,"What evolutionary adaptation helps birds fly?",null),(22,"A mandrill is what type of creature?",null),(23,"Identify the animal in the picture","QImages\\wildlife23.png"),(24,"A female deer is known as...",null),(25,"Which bird has the largest wingspan?",null),(26,"Hominoidea is a scientific name of which animal?",null),(27,"Which animal has the longest lifespan?",null),(28,"Identify the animal in the picture","QImages\\wildlife28.png"),(29,"Identify the bird in the picture","QImages\\wildlife29.png"),(30,"What is the scientific name of a tiger?",null),(31,"The fingerprints of which animal extremely resembles humans?",null),(32,"What is the largest breed of penguins?",null);
+
+INSERT INTO famous_options values(1,"Vocal Music","Bharathanatyam","Playing Violin","Kathak"),(2,"Junko Tabei","Bachendri Pal","Anshu Jamsenpa","Lhakpa Sherpa"),(3,"Lal Bahadur Shastri","B.R.Ambedkar","K.Kamraj","M.G.Ramachandran"),(4,"Verghese Kurien","M. S. Swaminathan","Vikram Sarabhai","Baba Amte"),(5,"Cartoonist","Writer","Cricketer","Politician"),(6,"Meryl Streep","Denzel Washington","Al Pacino","Helen Hayes"),(7,"Rabindranath Tagore","Bakim Chandra Chatterji","Swami Vivekanand","None of the above"),(8,"Milkha Singh","Joginder Singh","Mohinder Singh","Ajit Pal Singh"),(9,"Economics","Electronics","Geology","Politics"),(10,"Sardar Vallabhbhai Patel","Subhash Chandra Bose","Jawaharlal Nehru","Govind Ballabh Pant");
+
+INSERT INTO food_options values(1,"Shawarma","Baklava","Tabbouleh","Falafel"),(2,"Currency","Fertilizer","Medicine","Dye"),(3,"M&M's","Perk","Cadbury Dairy Milk","Galaxy"),(4,"Haricot beans","Cannellini beans","Flageolet beans","Borlotti beans"),(5,"Sushi featuring raw fish/seafood wrapped in rice","A type of dumpling","A selection of sliced raw fish & seafood","Sushi featuring rice topped with fish or seafood"),(6,"Crocus","Nasturtium","Poppy","Orchid"),(7,"Switzerland","Austria","Germany","France"),(8,"Hummus","Baba ghanoush","Guacamole","Marmite"),(9,"Tiger's tail","Lion's mane","King oyster","Chicken of the woods"),(10,"Biscuit of Lancashire, spiced with caraway seeds","Cake originating in Wales, made with almonds","Biscuit originating in Kent, made with poppy seeds","Cake of Yorkshire, spiced with cinnamon"),(11,"Rice","Egg","The bowl or dish the food is served in","Curry"),(12,"Risotto","Ravioli","Ratatouille","Rice pudding"),(13,"Tomatoes","Tamarind","Anchovies","Molasses"),(14,"Strudel","Baklava","Croissant","Bierock"),(15,"Belgium","Finland","Venezuela","France"),(16,"Pita","Pumpernickel","Matzah","Naan"),(17,"Yemen","Tonga","Pakistan","Saudi Arabia"),(18,"Trifle","Angel Food Cake","Parfait","Strawberry Pie"),(19,"Injera bread","Curried chickpeas","Steamed rice","Pickled carrots"),(20,"Vinegared rice","Raw fish","Daikon radish","Nori seaweed"),(21,"Bruschetta","Panettone","Pumpernickel","Baguette"),(22,"Ireland","New Zealand","Kenya","Sri Lanka"),(23,"Xiao long bao","Ha gao","Shu mai","Bao"),(24,"Malaysia","Australia","Tanzania","Guyana"),(25,"Baked Alaska","Princess cake","Pavlova","Floating island"),(26,"Beef","Pork","Tripe","Wild boar"),(27,"Rigatoni","Penne","Fusilli","Farfalle"),(28,"Chickpeas","Flour","Tomatoes","Sesame seeds"),(29,"Profiteroles","Buccellato","Chelsea buns","Choux au craquelin"),(30,"Pierogi","Gnocchi","Jiao zi","Empanadas"),(31,"Butter chicken","Lamb korma","Paneer butter masala","Tikka masala"),(32,"Croutons","Biscotti","Crackers","Pita");
+
+INSERT INTO geography_options values(1,"Mawsynram","Cherrapunji","Silchar","Guwahati"),(2,"Uttarakhand","Uttar Pradesh","Himachal Pradesh","Punjab"),(3,"Tropic of Cancer","Equator","Tropic of Capricorn","Arctic Circle"),(4,"Arabian Sea","Bay of Bengal","Indian Ocean","Atlantic Ocean"),(5,"Ganga","Indus","Brahmaputra","Godavari"),(6,"Australia","Europe","Antarctica","Africa"),(7,"Savannah","Taiga","Pampas","Prairies"),(8,"Ceylon","Madagascar","Tasmania","None of the above"),(9,"Russia","Canada","USA","Australia"),(10,"Indian Ocean","Atlantic Ocean","Pacific Ocean","Arctic Ocean");
+
+INSERT INTO history_options values(1,"Ashoka","Chandragupta","Harsha","Kanishka"),(2,"Mysore","Madurai","Hyderabad","Vijayanagar"),(3,"Surat","Bombay","Madras","Calcutta"),(4,"A.O. Hume","Mahatma Gandhi","Jawaharlal Nehru","Lokmanya Tilak"),(5,"Sher Shah Suri","Akbar","Ashoka","Samudra Gupta"),(6,"Leonardo Da Vinci","Picasso","Michelangelo","Vincent Van Gogh"),(7,"England","France","Spain","Germany"),(8,"Adolf Hitler","Winston Churchill","Joseph Stalin","Benito Mussolini "),(9,"Khufu","Sneferu","Tutankhamun","None of the above"),(10,"George Washington","Abraham Lincoln","Theodore Roosevelt","Thomas Jefferson");
+
+INSERT INTO music_options values(1,"The Miracles","The Temptations","The Four Tops","The Jackson 5"),(2,"Let's go girls!","Let's get started already!","I'm going totally crazy!","Howdy!"),(3,"Robert De Niro","Joe Pesci","Al Pacino","James Caan"),(4,"Hound Dog - Elvis Presley","Can't Help Falling in Love-Elvis Presley","I Fall to Pieces - Patsy Cline","Ring of Fire - Johnny Cash"),(5,"Toxic","Oops! ... I Did It Again","Criminal","Womanizer"),(6,"Pelican","Macau","Kiwi","Lovebird"),(7,"Delta Goodrem and Brian McFadden","McGraw and Hill","Jessica Simpson and Nick Lachey","Katie Price and Peter Andre"),(8,"Fernando","Chiquitita","Dancing Queens","Waterloo"),(9,"My Chemical Romance","Green Day","Nirvana","Red Hot Chili Peppers"),(10,"Chaka Khan","Annie Lennox","David Bowie","George Michael"),(11,"Fleetwood Mac","The Beatles","Led Zeppelin","Rascal Flatts"),(12,"Hold On - Wilson Phillips","I Will Always Love You - Whitney Houston","My Heart Will Go On - Celine Dion","Back for Good - Take That"),(13,"Someone Like You","Hello","Chasing Pavements","Rolling in the Deep"),(14,"Smooth Criminal","P.Y.T.(Pretty Young Thing)","Beat It","Billie Jean"),(15,"Thought I would lose without you, but I'm winning","Thought I would self destruct, but I'm still here","Thought I couldnt last without you,but I'm lastin'","Thought I couldnt breathe without you,I'm inhaling"),(16,"Billie Eilish","Lizzo","Lana Del Rey","Ariana Grande"),(17,"Will Smith","Carson Daly","Tupac","Michael Jackson"),(18,"Ronnie James Dio","Judas Priest","Dokken","Whitesnake"),(19,"10","11","21","12"),(20,"The Sugarcubes","Cocteau Twins","The Elgar sisters","Kukl"),(21,"Tuba","Trumpet","Tenor","French horns"),(22,"Alison Moyet","Aretha Louise Franklin","Michael Joseph Jackson","Christopher Maurice"),(23,"Marvin Gaye","Frankie Gaye","Bruno Mars","Elton John"),(24,"Hanalei","Neverland","Asgard","Bristol"),(25,"'Angie'","'Satisfaction'","'Wild Horses'","'Gimme Shelter'"),(26,"Bo Diddley","Chuck Berry","Little Richard","Muddy Waters"),(27,"Duran Duran","A Ha","Nile Rodgers","Tears for fears"),(28,"The Bodyguard: Original Soundtrack Album","I have nothing","My love is your love","Waiting to exhale"),(29,"'You've Lost That Loving Feeling'","'Just Once in My Life'","'Danger Zone'","'Soul and Inspiration'"),(30,"Leonard Bernstein","Kurt Masur","Jaap Van zweden","Alan Gilbert"),(31,"Banjo","Mandolin","Fiddle","Ukulele"),(32,"Amy Winehouse","Meghan Trainor","Alessia Cara","Sam Smith");
+
+INSERT INTO sports_options values(1,"K D Jadhav","Prithipal Singh","Harishchandra Birajdar","Dhyanchand"),(2,"Continuity","Integrity","Zeal to play sports","Challenge"),(3,"Fed Cup","BMW Open","Millrose Cup","Hopman Cup"),(4,"Chess","Hockey","Badminton","Table Tennis"),(5,"Argentina","Italy","Brazil","Chile"),(6,"Golf","Racing","Tennis","Polo"),(7,"Golf","Tennis","Lawn Tennis","Polo"),(8,"Karnam Malleshwari","P T Usha","Nameirakpam Kunjarani","Anju Bobby George"),(9,"Canada","India","England","Australia"),(10,"Track Cycling","Formula 1 racing","Lawn tennis","Ice Hockey"),(11,"Anil Kumble","Harbhajan Singh","Kapil Dev","Srinath"),(12,"England 1975","Australia 1976","New Zealand 1975","England 1978"),(13,"Shilaroo","Parwanoo","Delhi","Chail"),(14,"Snakes & Ladders","Carrom","Chess","Ludo"),(15,"French Open","Wimbledon","Australian Open","US Open"),(16,"Roger Bannister","Ben Johnson","John Landy","Jesse Owens"),(17,"Martina Navrotilova","Mary Joe Fernandez","Jana Novotna","Iva Majoli"),(18,"Nadia Comaneci","Lavinia Agache","Emilia Eberle","Daniela Silivas"),(19,"Sudirman Cup","Malaysian Open","Thomas Cup","Uber Sup"),(20,"Durand Cup","Tata Cup","Rovers Cup","F. A. Shield"),(21,"Manipur","Mizoram","Tripura","Nagaland"),(22,"42.195 km","41.295 km","42.475 km","41.745 km"),(23,"Florence Griffith Joyner","Evelyn Ashford","Shelly-Ann Fraser-Pryce","Jackie Joyner Kersee"),(24,"Poona","Shimla","Mussoorie","Ootacamund"),(25,"Wimbledon","Australian Open","French Open","Davis Cup"),(26,"Bridge","Snooker","Carroms","Chess"),(27,"Russia","Japan","Korea","China"),(28,"Rocky Marciano","Lee Epperson","Larry Holmes","Michael Spinks"),(29,"Jim Hines","Carl Lewis","Calvin Smith","Silvio Leonard"),(30,"Paavo Nurmi","Edvin Wide","Joseph Guillemot","Ville Ritola"),(31,"Sachin Tendulkar","M. S. Dhoni","Virat Kohli","Virender Segwag"),(32,"Abhinav Bindra","Shiv Keshvan","Neeraj Chopra","Sushil Kumar");
+
+INSERT INTO tourism_options values(1,"Turkey","Italy","Greenland","Russia"),(2,"8222","573","1025","32"),(3,"Portugal","Denmark","Colombia","France"),(4,"Laos","Austria","Bhutan","Kazakhstan"),(5,"Tokyo-Chicago","New York-Orlando","Paris-Orlando","Reykjavik-Vancouver"),(6,"Perth","Sydney","Melbourne","Adelaide"),(7,"Brazil","Cuba","Portugal","Spain"),(8,"Leeuwarden and Valletta","Aarhus and Paphos","San Sebastian and Wroclaw","Rijeka and Galway"),(9,"Estonia","Finland","Malta","Poland"),(10,"The Seychelles","The Maldives","Cape Verde","Indonesia"),(11,"Newark","Buenos Aires","Cape Town","Mexico City"),(12,"Capri","Sardinia","Corsica","Sicily"),(13,"Tunisia","Turkey","Lebanon","Cyprus"),(14,"Chile","Cuba","Panama","Peru"),(15,"Israel","The USA","Italy","Albania"),(16,"Oman","Fujairah","Umm Al Quwain","Abu Dhabi"),(17,"Santorini","Cyprus","Mykonos","Corfu"),(18,"Lastovo","Kos","Lefkada","Samos"),(19,"Poland","Romania","Russia","Italy"),(20,"Saudi Arabia","US","Malaysia","Morocco"),(21,"Iran","Ireland","Ivory coast","India"),(22,"All feature weapons","All feature writing","All have a single solid colour background","All feature animals"),(23,"Bali","Lombok","Borneo","Komodo"),(24,"Turkey","Armenia","Austria","Nepal"),(25,"Rome","Barcelona","Madrid","Lisbon"),(26,"Brazil and Argentina","Tanzania and Zambia","Ethiopia and Kenya","Switzerland and Italy"),(27,"Jordan","Egypt","Morocco","Qatar"),(28,"Netherlands","Finland","Croatia","Oman"),(29,"Madagascar","Kenya","Australia","Turkey"),(30,"Austria","Norway","France","Croatia"),(31,"Indonesia","Ethiopia","Nepal","Mexico"),(32,"Estonia, Latvia, Lithuania","Croatia, Slovenia, Italy","Iceland, Norway, UK","Poland, Czech Republic, Austria");
+
+INSERT INTO wildlife_options values(1,"a Parliament","a Surprise","an Army","Bewilderment"),(2,"Dolphins","Mice","Pigs","Naked mole rats"),(3,"Walk on water","Appear to come back from the dead","Cause hallucinations if you lick it","Fly"),(4,"Mallard","Golden-winged Cacique","Troupial","Moriche Oriole"),(5,"Japan","Spain","India","United States"),(6,"echidna","bongo","kiwi","Southern right whale"),(7,"Capybara","Jaguar","Red wolf","Sperm whale"),(8,"Quail","Sage Sparrow","Abert's Towhee","Yellow Cardinal"),(9,"inland taipan","Western diamondback Rattlesnake","black mamba","cobra"),(10,"Whale shark","basking shark","great white shark","hammerhead shark"),(11,"Arctic","Kit","Fennec","Red"),(12,"MAGNIFICENT FRIGATE BIRD","EASTERN MEADOWLARK","SULFUR CRESTED COCKATOO","GREATER BIRD OF PARADISE"),(13,"The carry their young in an external pouch","They change color to blend in with the environment","They live most of their lives in trees","They have very long necks"),(14,"The hard shell can't protect them","They burrow to protect themselves from heat","They dig shallow pits to catch water","The adults can survive about a year with no water"),(15,"Common Gull","Greater Amakihi","Arctic Tern","Lanai Hookbill"),(16,"Three-toed sloth","Banana Slug","Koala Bear","Giant Tortoise"),(17,"Giant panda","Sloth bear","Sun bear","Cinnamon bear"),(18,"3 years","18 months","2 years","10 months"),(19,"SWIFTLET","BLACK KITE","HUMMINGBIRD","MALLEEFOWL"),(20,"Bullfrogs","Dolphins","Horses","Alpine Swifts "),(21,"ALL OF THESE","BEAKS","HOLLOW BONES","RAPID DIGESTION"),(22,"Monkey","Bear","Bird specie of the rainforest","Crocodile"),(23,"Asian cobra","Mountain adder","Sand adder","Puff adder"),(24,"Doe","Jenny","Vixen","Ewe"),(25,"WANDERING ALBATROSS","OSTRICH","GOLDEN EAGLE","RUPPELL'S VULTURE"),(26,"Ape","Rhesus monkey","Bonobo","Orangutan"),(27,"Arctic whale","Asian Elephant","Blue and yellow macaw","Giant lobsters"),(28,"Japanese macaque","Mandrill","White-headed capuchin","Pygmy marmoset"),(29,"Pheasant","Pink-tailed Bunting","Yellowhammer","Akohekohe"),(30,"Panthera tigris","Panthera unica","Panthera padrus","Panthera tigrina"),(31,"Koala","Ape","Orangutan","Bear"),(32,"Emperor","Queen","King","Jack");
+
+INSERT INTO user_dets values('user','user','user@brainrush.com','2001-01-01',2001)

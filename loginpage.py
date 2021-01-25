@@ -1,5 +1,5 @@
 import pygame as pg, os, homepage, time, mysql.connector, signup, forgotpswd
-
+from functions import password
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 pg.init()
@@ -78,7 +78,7 @@ def showError(message):
 
 def validatePwd(username, pwd):
     con = mysql.connector.connect(
-        host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
+        host='localhost', user='root', passwd=password, database='brain_rush')
     if con.is_connected():
         try:
             cur = con.cursor()

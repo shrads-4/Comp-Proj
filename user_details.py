@@ -9,7 +9,7 @@ def main(username):
 
     def deleteAccount(username, password):
         con = mysql.connector.connect(
-            host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
+            host='localhost', user='root', passwd=password, database='brain_rush')
         if con.is_connected():
             try:
                 cur = con.cursor(buffered=True)
@@ -66,7 +66,7 @@ def main(username):
 
     def getEmail(username):
         con = mysql.connector.connect(
-            host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
+            host='localhost', user='root', passwd=password, database='brain_rush')
         if con.is_connected():
             try:
                 cur = con.cursor(buffered=True)
@@ -155,6 +155,5 @@ def main(username):
 
 
 if __name__ == "__main__":
-    username = 'user'
-    main(username)
+    main('user')
     pg.quit()

@@ -9,7 +9,7 @@ screen = pg.display.set_mode((800, 640), pg.RESIZABLE)
 
 def validateUsername(username, pwd, email, dob):
     con = mysql.connector.connect(
-        host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
+        host='localhost', user='root', passwd=password, database='brain_rush')
     if con.is_connected():
         try:
             cur = con.cursor(buffered='True')

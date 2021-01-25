@@ -13,7 +13,7 @@ def main(username):
 
     def showScore(username):
         con = mysql.connector.connect(
-            host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
+            host='localhost', user='root', passwd=password, database='brain_rush')
         if con.is_connected():
             try:
                 cur = con.cursor()
@@ -34,7 +34,7 @@ def main(username):
 
     def updateScore(score, username):
         con = mysql.connector.connect(
-            host='localhost', user='root', passwd='Shraddha4', database='comp_proj')
+            host='localhost', user='root', passwd=password, database='brain_rush')
         if con.is_connected():
             try:
                 cur = con.cursor()

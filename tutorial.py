@@ -68,5 +68,5 @@ def main(username):
 
 
 if __name__ == "__main__":
-    main('User1')
+    main('user')
     pg.quit()
