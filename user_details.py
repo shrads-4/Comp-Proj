@@ -7,7 +7,7 @@ pg.init()
 
 def main(username):
 
-    def deleteAccount(username, password):
+    def deleteAccount(username, PWD):
         con = mysql.connector.connect(
             host='localhost', user='root', passwd=password, database='brain_rush')
         if con.is_connected():
@@ -16,7 +16,7 @@ def main(username):
                 cur.execute(
                     'select pwd from user_dets where username="{}"'.format(username))
                 pwd = cur.fetchone()[0]
-                if pwd == password:
+                if pwd == PWD:
                     cur.execute(
                         'delete from user_dets where username="{}"'.format(username))
                     con.commit()
