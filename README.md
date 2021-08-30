@@ -1,5 +1,5 @@
 # Brain Rush!
-
+A project for CS class in 12th grade.
 Prerequisites:
 1. MySQL 8.0 (or later) Command Line Client
 2. Minimum 4 GB RAM
